@@ -1,0 +1,8 @@
+/target
+/nbproject
+/src/main/resources
+/src/test/resources
+/ui/node_modules
+/ui/.vscode
+/ui/.angular
+.DS_Store

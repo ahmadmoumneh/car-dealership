@@ -1,0 +1,18 @@
+<div class="host">
+  <div class="row">
+    <div class="col-sm">
+      <div class="fa">
+        <span style="padding-left:50px;"></span>  <i class="bi bi-currency-dollar fa-4x"></i>
+      </div>
+    </div>
+      <div class="col-sm">
+        <h1 style="margin:auto; width:480px;">{{ special.title }}</h1>
+        <p>{{ special.description }}</p>
+      </div>
+      <div class="col-sm" *ngIf="delete">
+        <div style="text-align: right;">
+          <button type="button" style="background-color: red;" (click)="deleteSpecial(special.specialId)">Delete</button>
+        </div>
+      </div>
+    </div>
+</div>

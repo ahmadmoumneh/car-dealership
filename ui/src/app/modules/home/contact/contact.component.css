@@ -1,0 +1,48 @@
+.contact{
+  border: 3px solid #000;
+  margin: 10px 100px;
+  padding: 0.1px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  }
+
+  .contact-content{
+    display: flex;
+  }
+  
+  .centre{
+    width: 90%;
+    text-align: center;
+  }
+
+  .ls{
+    width: 90%;
+  }
+
+  .percent {
+    font-size: 600%;
+  }
+  #contenu {
+    margin-left:245px;
+
+  }
+  .encadrer-un-contenu{ 
+    border: 1px solid black; padding: 5px; }
+.map iframe{
+
+  width: 100%;
+  height: 70%;
+
+
+}
+
+.map{
+  display: inline-flex;
+  justify-content: center;
+}
+.contact-form{
+  display: inline-flex;
+ flex-direction: column;
+ margin: 0 1rem;
+}

@@ -1,0 +1,14 @@
+.card-img-top {
+  width: 100%;
+  height: 22vh;
+  object-fit: cover;
+}
+
+.card-text {
+  text-align: justify;
+  font-size: 0.96rem;
+}
+
+/* .card {
+  width: 6rem;
+} */

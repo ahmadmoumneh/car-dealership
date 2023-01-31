@@ -1,0 +1,13 @@
+<div class="container-sm">
+    <h1 class="display-6 title">Models</h1>
+    <app-form [(form)]="form">
+        <app-form-control class="col-6" type="text" fieldName="Model Name" required="true"  [(fieldData)]="currentModel.modelName"></app-form-control>
+        <app-form-control class="col-6" type="select" fieldName="Make" required="true" [disabled]="!makesList" [dataList]="makesList" [(fieldData)]="currentModel.modelMake.makeName"></app-form-control>
+    </app-form>
+</div>
+<div class = "container mat-table"  *ngIf="dataSource">
+    <app-table
+        [columns]="columns"
+        [(dataSource)]="dataSource">
+    </app-table>
+</div>

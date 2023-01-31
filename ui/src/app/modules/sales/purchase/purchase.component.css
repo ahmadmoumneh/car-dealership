@@ -1,0 +1,38 @@
+.inline{
+    display:inline;
+}
+
+.submit{
+    margin-right: -90px;
+}
+
+.error {
+    margin-top: -10px;
+    font-weight:lighter;
+    font-size: small;
+    color:red;
+}
+form label{ font-weight: blod;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            color:black;}
+
+ul{
+    list-style: none;
+}
+
+input,label, select {
+display:block;
+}
+
+input, select{
+    margin-bottom: 10px;
+}
+
+hr{
+    height: 5px;
+    background-color:black;
+}
+
+.title {
+    font-weight: 400;
+}

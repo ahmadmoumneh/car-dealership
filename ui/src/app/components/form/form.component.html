@@ -1,0 +1,20 @@
+<form class="form g-3 border border-1 rounded" (ngSubmit)="save()" #formGroup="ngForm">
+  <div class="d-flex flex-column px-4 form">
+    <div>
+      <div class="row">
+        <ng-content></ng-content>
+      </div>
+      <div class="row mt-3">
+        <div class="col-auto">
+          <button type="submit" class="btn btn-success mb-3" [disabled]="!formGroup.form.valid">Save</button>
+        </div>
+        <div *ngIf="deleteButton" class="col-auto">
+          <button type="button" class="btn btn-danger mx-2" (click)="onDelete()">Delete</button>
+        </div>
+        <div class="col-auto">
+          <button type="button" class="btn btn-default mx-2" (click)="reset()">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

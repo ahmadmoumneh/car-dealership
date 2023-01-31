@@ -1,0 +1,11 @@
+<div class="container-sm">
+    <h1 class="display-6 title">New Vehicles</h1>
+    <app-search (search)="search($event)"></app-search>
+
+    <div class="container-fluid searchResults"  *ngIf="newVehicles">
+        <h2 class="display-6">Search Results</h2>
+        <div class="card" >
+            <app-search-result *ngFor="let newVehicle of newVehicles" [vehicle]="newVehicle" buttonType="Details" [action]="action"></app-search-result>
+        </div>
+    </div>    
+</div>

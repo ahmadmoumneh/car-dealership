@@ -1,0 +1,18 @@
+<div class="container-sm special">
+  <h1 class="display-6 title">Specials</h1>
+  <div class="row">
+    <div class="offset-4 col-4">
+      <app-form [(form)]="form">
+        <div class="d-flex flex-column align-items-center">
+          <div class="col-12">
+            <app-form-control type="text" fieldName="Title" required="true" [(fieldData)]="currentSpecial.title"></app-form-control>
+            <app-form-control type="text" fieldName="Description" required="true" [(fieldData)]="currentSpecial.description"></app-form-control>
+          </div>
+        </div>
+      </app-form>
+    </div>
+    <div class="col-8 offset-2">
+      <app-special (deleteSpecial)="deleteSpecialById($event)" [special]="special" delete="true" *ngFor="let special of specials"></app-special>
+    </div>
+  </div>
+</div>

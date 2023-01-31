@@ -1,0 +1,12 @@
+<div class="container col-4">
+    <h1 class="display-6 title">Makes</h1>
+    <app-form [(form)]="form">
+      <app-form-control class="col-12" type="text" fieldName="Make Name" required="true" [(fieldData)]="currentMake.makeName"></app-form-control>
+    </app-form>
+</div>
+<div class = "container mat-table" *ngIf="dataSource">
+    <app-table
+        [columns]="columns"
+        [dataSource]="dataSource">
+    </app-table>
+</div>

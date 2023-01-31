@@ -1,0 +1,8 @@
+<div class="container-sm">
+    <h1 class="display-6 title">Admin</h1>
+    <app-search (search)="search($event)"></app-search>
+    <div class="container-fluid searchResults"  *ngIf="allVehicles">
+        <h2 class="display-6">Search Results</h2>
+        <app-search-result *ngFor="let vehicle of allVehicles" [vehicle]="vehicle" buttonType="Edit" [action]="action"></app-search-result>
+    </div>
+</div>

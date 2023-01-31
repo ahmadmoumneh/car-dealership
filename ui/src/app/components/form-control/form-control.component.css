@@ -1,0 +1,16 @@
+.e {
+  color: red;
+  position: absolute;
+  z-index: 1;
+}
+
+.v {
+  color: green;
+  position: absolute;
+  z-index: 1;
+}
+
+input, input:focus, select, select:focus,
+textarea, textarea:focus {
+  background-color: white;
+}

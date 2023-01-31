@@ -1,0 +1,24 @@
+<div class="container-sm">
+  <h1 class="display-6 title">Contact Us</h1>
+  <div class="row">
+    <div class="col-4">
+      <app-form [(form)]="form">
+        <div class="d-flex flex-column align-items-center">
+          <div class="col-12">
+            <app-form-control type="text" fieldName="Name" required="true" [(fieldData)]="currentContact.name"></app-form-control>
+            <app-form-control type="text" fieldName="Email" required="true" [(fieldData)]="currentContact.phone"></app-form-control>
+            <app-form-control type="text" fieldName="Phone" required="true" [(fieldData)]="currentContact.email"></app-form-control>
+            <app-form-control type="textarea" fieldName="Message" required="true" [(fieldData)]="currentContact.message"></app-form-control>
+          </div>
+        </div>
+      </app-form>
+    </div>
+    <div class="offset-2 col-4 map">
+      <iframe class="col-auto d-inline-flex"
+        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d11192.84526289483!2d-73.4265344!3d45.46554695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sfr!2sca!4v1674185183921!5m2!1sfr!2sca"
+        width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+  </div>
+</div>

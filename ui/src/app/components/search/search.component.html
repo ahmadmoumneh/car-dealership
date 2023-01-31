@@ -1,0 +1,40 @@
+<form [formGroup] ="form" (ngSubmit)="search(form.value)" class="row g-6 border border-1 rounded" style="margin-top: 20px; padding-top : 20px;">
+    <h2 class="display-6">Quick Search</h2>
+    <div class="col-md-3">
+        <input type="text" class="form-control" formControlName = "value" id="usedModel"  placeholder="Enter make, model or year">
+    </div>
+    <div class="col-auto">
+        <label for="make">Price</label>
+    </div>
+    <div class="col">
+        <input class="form-select" formControlName="minPrice" id="minPrice" list="minPrice" placeholder="min price">
+        <datalist id="minPrice">
+            <option value="No Min">                
+        </datalist>
+    </div>
+    <div class="col">
+        <input class="form-select" formControlName="maxPrice" id="maxPrice" list="maxPrice" placeholder="max price">
+        <datalist id="maxPrice">
+            <option value="No Max">                
+        </datalist>
+    </div>
+    <div class="w-100 d-lg-none"></div>
+    <div class="col-auto">
+        <label for="make">Year</label>
+    </div>
+    <div class="col">
+        <input class="form-select" formControlName="minYear" id="minYear" list="minYear" placeholder="min year">
+        <datalist id="minYear">
+            <option value="No Min">                
+        </datalist>
+    </div>
+    <div class="col">
+        <input class="form-select" formControlName="maxYear" id="maxYear" list="maxYear" placeholder="max year">
+        <datalist id="maxYear">
+            <option value="No Max">                
+        </datalist>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3">Search</button>
+    </div>
+</form>

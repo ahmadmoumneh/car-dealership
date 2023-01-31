@@ -1,0 +1,19 @@
+.carousel-inner {
+  border-radius: 2%;
+}
+
+.outerContainer{
+  width: 40%; 
+  margin-bottom: 40px;
+  margin-top: 5%;
+}
+
+.jumbotron {
+  background: rgb(134, 202, 244);
+}
+
+.mainText {
+  text-align: left;
+  top: 50px;
+  width: 70%;
+}

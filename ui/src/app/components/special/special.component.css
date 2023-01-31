@@ -1,0 +1,19 @@
+.host{
+  display: block;
+  border: 3px solid rgb(200, 239, 207);
+  width: 100%;
+  height: 150px;
+  position: relative;
+  padding: 8px;
+  margin: 20px;
+  border-radius: 5px;
+}
+
+.fa {
+  font-size: 5em ;
+  display: flex;
+}
+
+.special {
+  border-radius: 5%;
+}

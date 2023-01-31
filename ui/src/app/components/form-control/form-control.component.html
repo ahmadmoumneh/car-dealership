@@ -1,0 +1,77 @@
+<div [ngSwitch]="type">
+  <div *ngSwitchCase="type === 'text' || type === 'password' ? type : ''">
+    <div class="col-12 pb-1 pt-1">
+      <label [for]="fieldName"><strong>{{ fieldName }}</strong></label>
+    </div>
+    <div class="d-flex align-items-center justify-content-end">
+      <div class="col-12 form-group d-inline-flex flex-column">
+        <input #element [type]="type" [id]="fieldName" class="form-control" [name]="fieldName" (focus)="showError()" (blur)="hideError()" (input)="onInput(field.value, fieldError)" [required]="required" [disabled]="disabled" #field="ngModel" [minlength]="minlength" [maxlength]="maxlength" [(ngModel)]="fieldData" />
+        <span class="position-absolute m-1 text-danger" *ngIf="required">*</span>
+      </div>
+      <div class="align-items-center d-inline-flex" *ngIf="fieldData">
+        <div [hidden]="field.pristine" class="mx-1" [ngClass]="{'e': !field.valid, 'v': field.valid}">
+          <strong *ngIf="field.valid">✓</strong>
+          <strong *ngIf="!field.valid">x</strong>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="error" #fieldError [ngClass]="{'alert-hide': field.pristine || field.valid}">
+        <div class="alert" [ngClass]="{'alert-danger': !error.warning, 'alert-warning': error.warning}" *ngFor="let error of errors">
+          {{ error['message'] }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngSwitchCase="'select'">
+    <div>
+      <div class="col-12 pb-1 pt-1">
+        <label [for]="field"><strong>{{ fieldName }}</strong></label>
+      </div>
+      <div class="col-12 d-flex justify-content-start">
+        <span class="position-absolute m-1 text-danger" *ngIf="required">*</span>
+        <select #element [id]="fieldName" class="form-select" [name]="fieldName" (change)="onSelect(field.value)" (click)="hideError()"  (blur)="showError()" [required]="required" [disabled]="disabled" [minlength]="minlength" [maxlength]="maxlength" #field="ngModel" [(ngModel)]="fieldData">
+          <option *ngFor="let item of dataList" [value]="item">{{ item }}</option>
+        </select>
+        <div class="justify-content-end">
+          <div class="d-inline-flex align-items-center">
+            <div [hidden]="field.pristine && field.untouched" class="mx-1" [ngClass]="{'e': !field.valid, 'v': field.valid}">
+              <strong *ngIf="field.valid">✓</strong>
+              <strong *ngIf="!field.valid">x</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="error" #fieldError [ngClass]="{'alert-hide': field.untouched}"> 
+      <div class="alert" [ngClass]="{'alert-danger': !error.warning, 'alert-warning': error.warning}" *ngFor="let error of errors">
+        {{ error['message'] }}
+      </div>
+    </div>
+  </div>
+  <div *ngSwitchCase="'textarea'">
+    <div>
+      <div class="col-12 pb-1 pt-1">
+        <label [for]="field"><strong>{{ fieldName }}</strong></label>
+      </div>
+        <div class="d-inline-flex col-12" >
+          <span class="position-absolute m-1 text-danger" *ngIf="required">*</span>
+          <textarea #element [id]="fieldName" rows="8" class="form-control" [name]="fieldName" (focus)="showError()" (blur)="hideError()" (input)="onInput(field.value)" [required]="required" [disabled]="disabled" [minlength]="minlength" [maxlength]="maxlength" #field="ngModel" [(ngModel)]="fieldData"></textarea> 
+           <div class="d-flex align-items-center">
+            <div class="d-inline-flex" [hidden]="field.pristine && field.untouched" class="mx-1" [ngClass]="{'e': !field.valid, 'v': field.valid}">
+              <strong *ngIf="field.valid">✓</strong>
+              <strong *ngIf="!field.valid">x</strong>
+            </div>
+           </div>
+      </div>
+    </div>
+    <div class="error" #fieldError [ngClass]="{'alert-hide': field.pristine || field.valid}">
+      <div class="alert" [ngClass]="{'alert-danger': !error.warning, 'alert-warning': error.warning}" *ngFor="let error of errors">
+        {{ error['message'] }}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

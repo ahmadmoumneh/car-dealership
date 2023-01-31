@@ -1,0 +1,9 @@
+<div class="container-sm">
+    <h1 class="display-6 title">Used Vehicles</h1>
+    <app-search (search)="search($event)"></app-search>
+
+    <div class="container-fluid searchResults"  *ngIf="usedVehicles">
+        <h2 class="display-6">Search Results</h2>
+        <app-search-result *ngFor="let usedVehicle of usedVehicles" [vehicle]="usedVehicle" buttonType="Details" [action]="action"></app-search-result>
+    </div>    
+</div>

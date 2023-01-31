@@ -1,0 +1,25 @@
+<div class="card" >
+    <div class="row card-body">
+        <h4 class="card-title"><strong>{{vehicle.year}} {{ vehicle.model.modelName }}</strong> {{ vehicle.model.modelMake.makeName }}</h4>
+        <div class="row">
+            <div class="col-md-3">
+                <img [src]="'assets/images/inventory-' + vehicle.vehicleId + '.jpg'" width="100%" class="card-img-top" alt="vehicleImg">
+            </div>
+            <div class="col-md-3">
+              <p><b>Body Style: </b>{{vehicle.bodyStyle}}</p>
+              <p><b>Trans: </b>{{vehicle.transmission}}</p>
+              <p><b>Color: </b>{{vehicle.color}}</p>
+            </div>
+            <div class="col-md-3">
+                <p><b>Interior: </b>{{vehicle.interior}}</p>
+                <p><b>Mileage: </b>{{vehicle.mileage | mileage }}</p>
+                <p><b>VIN #: </b>{{vehicle.vin}}</p>
+            </div>
+            <div class="col-md-3">
+                <p><b>Sale Price: </b>{{vehicle.salePrice}}</p>
+                <p><b>MSRP: </b>{{vehicle.msrp}}</p>
+                <button (click)="go(vehicle.vehicleId, router)" class="btn btn-primary">{{ buttonType }}</button>      
+            </div>
+        </div>
+    </div>
+</div>

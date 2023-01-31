@@ -1,0 +1,31 @@
+<div class="container col-10 pt-2">
+  <h1 class="display-6 title">Purchase Vehicle</h1>
+  <app-vehicle-detail [contact]="false" [vehicle]="currentVehicle"></app-vehicle-detail>
+  <br>
+  <h1 class="display-6 title">Sales Information</h1> 
+  <app-form [(form)]="form">
+    <div class="row pt-2">
+        <app-form-control class="col-6" type="text" fieldName="Name" [required]="!currentPurchase.phone" [(fieldData)]="currentPurchase.name"></app-form-control>
+        <app-form-control class="col-6" type="text" fieldName="Phone" [required]="currentPurchase.phone" pattern="phonePattern" minlength="10" maxlength="10" [validators]="phoneValidators" [(fieldData)]="currentPurchase.phone"></app-form-control>
+    </div>
+    <div class="row">
+        <app-form-control class="col-6" type="text" fieldName="Email" required="true" pattern="emailPattern" [(fieldData)]="currentPurchase.email" [validators]="emailValidators"></app-form-control>
+    </div>
+    <div class="row">
+        <app-form-control class="col-6" type="text" fieldName="Street 1" required="true" [(fieldData)]="currentPurchase.street1"></app-form-control>
+        <app-form-control class="col-6" type="text" fieldName="Street 2" [(fieldData)]="currentPurchase.street2"></app-form-control>
+    </div>
+    <div class="row">
+      <app-form-control class="col-6" type="text" fieldName="City" required="true" pattern="passwordPattern" [(fieldData)]="currentPurchase.city"></app-form-control>
+      <app-form-control class="col-6" type="select" fieldName="State" required="true" [dataList]="states" [(fieldData)]="currentPurchase.state"></app-form-control>
+    </div>
+    <div class="row">
+      <app-form-control class="col-6" type="text" fieldName="Zipcode" required="true" pattern="zipcodPattern" [(fieldData)]="currentPurchase.zipcode" [validators]="zipcodeValidators"></app-form-control>
+    </div>
+    <hr class="mt-4">
+    <div class="row">
+      <app-form-control class="col-6" type="text" fieldName="Purchase Price" required="true" [(fieldData)]="currentPurchase.price" [validators]="priceValidators"></app-form-control>
+      <app-form-control class="col-6" type="select" fieldName="Purchase Type" required="true" [dataList]="purchaseTypes" [(fieldData)]="currentPurchase.purchaseType"></app-form-control>
+    </div>
+  </app-form>
+</div>

@@ -1,0 +1,34 @@
+<div class="container border border-1 rounded p-4">
+  <div class="row">
+    <div class="col-3">
+      <h1><strong>{{ vehicle?.year }} {{ vehicle?.model?.modelMake?.makeName }}</strong> {{ vehicle?.model?.modelName }}</h1>
+      <img width="100%" [src]="'assets/images/inventory-' + vehicle?.vehicleId + '.jpg'" />
+    </div>
+    <div class="col-9">
+      <div class="row">
+        <div class="col-4">
+          <div class="detail"><span class="subtitle"><strong>Body: </strong></span><span>{{ vehicle?.bodyStyle }}</span></div>
+          <div class="detail"><span class="subtitle"><strong>Trans: </strong></span><span>{{ vehicle?.transmission }}</span></div>
+          <div class="detail"><span class="subtitle"><strong>Color: </strong></span><span>{{ vehicle?.color }}</span></div>
+        </div>
+        <div class="col-5">
+          <div class="detail"><span class="subtitle"><strong>Interior: </strong></span><span>{{ vehicle?.interior }}</span></div>
+          <div class="detail"><span class="subtitle"><strong>Mileage: </strong></span><span>{{ vehicle?.vehicleType }}</span></div>
+          <div class="detail"><span class="subtitle"><strong>VIN #: </strong></span><span>{{ vehicle?.vin }}</span></div>
+        </div>
+        <div class="col-3">
+          <div class="detail"><span class="subtitle"><strong>Sale Price: </strong></span><span>{{ '$' + vehicle?.salePrice }}</span></div>
+          <div class="detail"><span class="subtitle"><strong>MSRP: </strong></span><span>{{ '$' + vehicle?.msrp }}</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="detail"><span class="subtitle"><strong>Description: </strong></span><span>{{ vehicle?.description }}</span></div>
+        </div>
+        <div *ngIf="contact" class="col-12 d-flex justify-content-end">
+          <button  class="btn btn-primary" (click)="contactUs()">Contact Us</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

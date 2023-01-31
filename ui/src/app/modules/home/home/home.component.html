@@ -1,0 +1,8 @@
+<app-jumbotron></app-jumbotron>
+<div class="container">
+  <h1 class="display-6" style="margin-bottom: 20px;">Featured Vehicles</h1>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3" *ngIf="featuredVehicles">
+        <app-thumbnail *ngFor="let fVehicle of featuredVehicles" 
+        [vehicleId]="fVehicle.vehicleId" [description]="fVehicle.description" class="card col"></app-thumbnail>
+  </div>
+</div>
