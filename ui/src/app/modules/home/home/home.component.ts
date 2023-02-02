@@ -19,11 +19,15 @@ export class HomeComponent implements OnInit {
   specials: Special[];
   featuredVehicles: Vehicle[];
 
+
   ngOnInit() {
     // this.vehicleService.searchNewVehicles().subscribe(newVehicles => {
     //   console.log(newVehicles);
     // })
-    
+    const token = localStorage.getItem("token"); // get token from local storag
+
+    console.log(token);
+
     this.specialService.getAllSpecials().subscribe(specials => {
       this.specials = specials;
       console.log(this.specials);      

@@ -16,9 +16,10 @@ import { UsedComponent } from './modules/inventory/used/used.component';
 import { VehiclesComponent } from './modules/admin/vehicles/vehicles.component';
 import { VehicleDetailComponent } from './components/vehicle-detail/vehicle-detail.component';
 import { EditVehicleComponent } from './modules/admin/edit-vehicle/edit-vehicle.component';
+import { LoginComponent } from './modules/home/login/login.component';
 
 const routes: Routes = [
-
+  {path: 'home/login', component:LoginComponent},
   {path:'home/index',component: HomeComponent},
   {path:'home/specials',component: SpecialsHomeComponent},
   {path:'home/contact',component: ContactComponent},

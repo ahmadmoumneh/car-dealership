@@ -19,6 +19,7 @@ export class FormComponent implements AfterViewInit {
   @Input() form: Form;
   @Output() formChange = new EventEmitter<Form>();
   @Input() deleteButton: boolean;
+@Input() saveButton: string = "Save";
 
   constructor(private formService: FormService){}
   

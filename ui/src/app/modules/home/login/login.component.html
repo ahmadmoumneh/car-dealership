@@ -1,1 +1,6 @@
-<p>login works!</p>
+<app-form [(form)]="form" saveButton="Login">
+<div class="row pt-2">
+    <app-form-control class="col-6" type="text" fieldName="userName" required [(fieldData)]="username"></app-form-control>
+    <app-form-control class="col-6" type="password" fieldName="password" required  [(fieldData)]="password"></app-form-control> 
+</div>
+</app-form>

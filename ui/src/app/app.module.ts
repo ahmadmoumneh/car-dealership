@@ -15,6 +15,7 @@ import { SalesModule } from './modules/sales/sales.module';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from '../app/components/navigation/navigation.component';
 
+
 @NgModule({
     declarations: [
         AppComponent
@@ -26,7 +27,6 @@ import { NavigationComponent } from '../app/components/navigation/navigation.com
         FormsModule,
         HttpClientModule,
         AppRoutingModule,
-        AccountModule,
         AdminModule,
         HomeModule,
         InventoryModule,
