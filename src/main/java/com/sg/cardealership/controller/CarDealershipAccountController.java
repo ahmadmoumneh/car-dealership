@@ -44,10 +44,12 @@ public class CarDealershipAccountController {
         return ResponseEntity.ok(user);
     }
     
-    @PostMapping("/login")
+    @GetMapping("/login")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<User> login(@RequestBody String[] credentials) {
-        User loggingUser = this.userService.login(credentials);
+    public ResponseEntity<User> login(@RequestParam String username, 
+            @RequestParam String password) {
+        
+        User loggingUser = this.userService.login(username, password);
         
         Optional<ResponseEntity> response = 
                 Optional.of(ResponseEntity.ok(loggingUser));
