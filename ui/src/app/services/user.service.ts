@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../classes/user';
@@ -19,5 +19,14 @@ export class UserService {
 
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.serverUrl + '/admin/users');
+  }
+
+  getUserByCredentials(username: string, password: string): Observable<User> {
+    let queryParams = new HttpParams();
+
+    queryParams = queryParams.append('username', username);
+    queryParams = queryParams.append('password', password);
+
+    return this.http.get<User>(`${this.serverUrl}/account/login`, {params: queryParams});
   }
 }

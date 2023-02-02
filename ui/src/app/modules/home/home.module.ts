@@ -9,15 +9,13 @@ import { FormComponent } from '../../components/form/form.component';
 import { SpecialComponent } from '../../components/special/special.component';
 import { FormControlComponent } from 'src/app/components/form-control/form-control.component';
 import { FormsModule } from '@angular/forms';
-import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
   declarations: [
       ContactComponent,
       HomeComponent,
-      SpecialsComponent,
-      LoginComponent
+      SpecialsComponent
   ],
   imports: [
       CommonModule,

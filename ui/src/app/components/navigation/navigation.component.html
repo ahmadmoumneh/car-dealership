@@ -31,7 +31,7 @@
                     <li class="nav-item">
                         <a class="nav-link" routerLink="sales/home">Sales</a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li *ngIf="isAdmin" class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                           Admin
                         </a>
@@ -49,6 +49,10 @@
                 </ul>
             </div>
         </div>
-        <div class="gap"></div>
+        <div class="gap navbar-nav">
+            <div *ngIf="isLoggedIn" class="nav-item">
+                <a class="nav-link logout" (click)="logout()">Log out</a>
+            </div>
+        </div>
     </nav>
 </div>

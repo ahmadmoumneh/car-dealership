@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Special } from 'src/app/classes/special';
 import { Vehicle } from 'src/app/classes/vehicle';
+import { AuthService } from 'src/app/services/auth.service';
 import { SpecialService } from 'src/app/services/special.service';
 import { VehicleService } from 'src/app/services/vehicle.service';
 
@@ -13,7 +15,9 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private vehicleService: VehicleService,
-    private specialService: SpecialService
+    private specialService: SpecialService,
+    private authService: AuthService,
+    private router: Router
   ){};
 
   specials: Special[];
@@ -21,13 +25,6 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit() {
-    // this.vehicleService.searchNewVehicles().subscribe(newVehicles => {
-    //   console.log(newVehicles);
-    // })
-    const token = localStorage.getItem("token"); // get token from local storag
-
-    console.log(token);
-
     this.specialService.getAllSpecials().subscribe(specials => {
       this.specials = specials;
       console.log(this.specials);      
