@@ -9,6 +9,7 @@ import com.sg.cardealership.dto.InventoryReport.InventoryReportMapper;
 import com.sg.cardealership.dto.SalesReport;
 import com.sg.cardealership.dto.SalesReport.SalesReportMapper;
 import com.sg.cardealership.dto.SalesReportQuery;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -35,10 +36,15 @@ public class CarDealershipReportDaoDB implements CarDealershipReportDao {
     }
 
     @Override
-    public InventoryReport generateInventoryReport(String vehicleType) {
-        InventoryReport inventoryReport = new InventoryReport(vehicleType);
+    public List<InventoryReport> generateInventoryReport(String vehicleType) {
+        InventoryReport inventoryReport = new InventoryReport();
         
-        return jdbc.queryForObject(inventoryReport.getSql(), 
+        inventoryReport.setArgs(vehicleType);
+        inventoryReport.generateSql();
+        
+        System.out.println(inventoryReport.getSql());
+        
+        return jdbc.query(inventoryReport.getSql(), 
                 new InventoryReportMapper(), inventoryReport.getArgs());
     }
 }

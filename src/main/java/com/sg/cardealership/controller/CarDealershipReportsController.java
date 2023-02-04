@@ -8,6 +8,7 @@ import com.sg.cardealership.dto.InventoryReport;
 import com.sg.cardealership.dto.SalesReport;
 import com.sg.cardealership.dto.SalesReportQuery;
 import com.sg.cardealership.service.CarDealershipReportService;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,22 +43,13 @@ public class CarDealershipReportsController {
     }
     
     @GetMapping("/inventory/new")
-    public ResponseEntity<InventoryReport> getNewVehiclesReport() {
-        InventoryReport inventoryReport = this.reportService.getNewVehiclesReport();
-        
-        Optional<ResponseEntity> response = 
-                Optional.of(ResponseEntity.ok(inventoryReport));
-       
-        return response.orElse(new ResponseEntity(null, HttpStatus.NOT_FOUND));
+    public List<InventoryReport> getNewVehiclesReport() {
+        return this.reportService.getNewVehiclesReport();
     }
     
     @GetMapping("/inventory/used")
-    public ResponseEntity<InventoryReport> getUsedVehiclesReport() {
-        InventoryReport inventoryReport = this.reportService.getUsedVehiclesReport();
-        
-        Optional<ResponseEntity> response = 
-                Optional.of(ResponseEntity.ok(inventoryReport));
+    public List<InventoryReport> getUsedVehiclesReport() {
        
-        return response.orElse(new ResponseEntity(null, HttpStatus.NOT_FOUND));
+        return this.reportService.getUsedVehiclesReport();
     }
 }

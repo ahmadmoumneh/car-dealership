@@ -59,7 +59,9 @@ public class CarDealershipUserServiceImpl implements
     }
 
     @Override
-    public User login(String[] credentials) {
+    public User login(String username, String password) {
+        String[] credentials = {username, password};
+        
         this.currentUser = this.userDao.getUserByCredentials(credentials);
         return this.currentUser;
     }

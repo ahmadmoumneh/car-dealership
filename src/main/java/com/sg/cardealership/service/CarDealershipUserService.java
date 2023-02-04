@@ -21,7 +21,7 @@ public interface CarDealershipUserService {
     
     boolean changePassword(User user);
     
-    User login(String[] credentials);
+    User login(String username, String password);
     
     void logout(int id);
 }

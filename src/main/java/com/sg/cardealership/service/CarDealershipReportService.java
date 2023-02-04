@@ -7,6 +7,7 @@ package com.sg.cardealership.service;
 import com.sg.cardealership.dto.InventoryReport;
 import com.sg.cardealership.dto.SalesReport;
 import com.sg.cardealership.dto.SalesReportQuery;
+import java.util.List;
 
 
 /**
@@ -17,7 +18,7 @@ public interface CarDealershipReportService {
 
     SalesReport getSalesReport(SalesReportQuery query);
     
-    InventoryReport getNewVehiclesReport();
+    List<InventoryReport> getNewVehiclesReport();
     
-    InventoryReport getUsedVehiclesReport();
+    List<InventoryReport> getUsedVehiclesReport();
 }

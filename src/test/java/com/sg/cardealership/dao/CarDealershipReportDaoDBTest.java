@@ -162,10 +162,10 @@ public class CarDealershipReportDaoDBTest implements
      */
     @Test
     public void testGenerateInventoryReport() {
-        InventoryReport inventoryReport = 
+        List<InventoryReport> inventoryReports = 
                 this.reportDao.generateInventoryReport(NEW);
         
-        assertEquals(2, inventoryReport.getCount());
+        assertEquals(1, inventoryReports.size());
         
         
     }

@@ -7,6 +7,7 @@ package com.sg.cardealership.dao;
 import com.sg.cardealership.dto.InventoryReport;
 import com.sg.cardealership.dto.SalesReport;
 import com.sg.cardealership.dto.SalesReportQuery;
+import java.util.List;
 
 /**
  *
@@ -15,5 +16,5 @@ import com.sg.cardealership.dto.SalesReportQuery;
 public interface CarDealershipReportDao {
     SalesReport generateSalesReport(SalesReportQuery query);
     
-    InventoryReport generateInventoryReport(String vehicleType);
+    List<InventoryReport> generateInventoryReport(String vehicleType);
 }

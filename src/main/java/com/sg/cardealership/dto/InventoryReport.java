@@ -28,10 +28,6 @@ public class InventoryReport {
     public InventoryReport(){
         this.id = ids++;
     }
-    
-    public InventoryReport(String vehicleType){
-        this.generateSql(vehicleType);
-    }
 
     public int getId() {
         return id;
@@ -88,19 +84,21 @@ public class InventoryReport {
     public void setStockValue(BigDecimal stockValue) {
         this.stockValue = stockValue;
     }
+    
+    public void setArgs(Object args) {
+        this.args = args;
+    }
 
     public void setSql(String sql) {
         this.sql = sql;
     }
 
-    public final void generateSql(String vehicleType) {
+    public final void generateSql() {
         this.sql = "SELECT v.year AS year, mk.makeName AS make, md.modelName "
                 + "AS model, COUNT(v.vehicleId) AS count, SUM(v.msrp) AS "
                 + "stockValue FROM vehicle v JOIN model md ON v.modelId = "
                 + "md.modelId JOIN make mk ON md.makeId = mk.makeId WHERE "
                 + "v.vehicleType = ? GROUP BY year, make, model";
-        
-        this.args = vehicleType;
     }
     
     public final static class InventoryReportMapper implements 

@@ -9,6 +9,7 @@ import com.sg.cardealership.dao.CarDealershipReportDao;
 import com.sg.cardealership.dto.InventoryReport;
 import com.sg.cardealership.dto.SalesReport;
 import com.sg.cardealership.dto.SalesReportQuery;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,12 +30,12 @@ public class CarDealershipReportServiceImpl implements
     }
 
     @Override
-    public InventoryReport getNewVehiclesReport() {
+    public List<InventoryReport> getNewVehiclesReport() {
         return this.reportDao.generateInventoryReport(NEW);
     }
 
     @Override
-    public InventoryReport getUsedVehiclesReport() {
+    public List<InventoryReport> getUsedVehiclesReport() {
         return this.reportDao.generateInventoryReport(USED);
     }
 }
