@@ -16,7 +16,7 @@ import java.util.List;
  * @author Car Dealers
  */
 public interface CarDealershipVehicleService {
-    List<Vehicle> getVehicles(boolean isFeatured) throws 
+    List<Vehicle> getFeaturedVehicles(boolean isFeatured) throws 
             IOException, SQLException;
     
     List<Vehicle> getVehicles(InventoryQuery query, String type) throws

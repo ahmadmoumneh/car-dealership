@@ -5,8 +5,12 @@
 package com.sg.cardealership.service;
 
 import com.sg.cardealership.dao.CarDealershipVehicleDao;
+import com.sg.cardealership.dao.VehicleRepository;
 import com.sg.cardealership.dto.InventoryQuery;
 import com.sg.cardealership.dto.Vehicle;
+
+import jakarta.persistence.EntityNotFoundException;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -24,10 +28,13 @@ public class CarDealershipVehicleServiceImpl implements
     
     @Autowired
     private CarDealershipVehicleDao vehicleDao;
+
+    @Autowired
+    private VehicleRepository vehicleRepo;
     
     @Override 
-    public List<Vehicle> getVehicles(boolean isFeatured) throws IOException, SQLException {
-        return this.vehicleDao.getVehicles(isFeatured);
+    public List<Vehicle> getFeaturedVehicles(boolean isFeatured) throws IOException, SQLException {
+        return this.vehicleRepo.findByIsFeatured(isFeatured);
     }
 
     @Override
@@ -42,13 +49,14 @@ public class CarDealershipVehicleServiceImpl implements
 
     @Override
     public Vehicle getVehicleById(int id) throws IOException, SQLException {
-        return this.vehicleDao.getVehicleById(id);
+        return vehicleRepo.findById(id).orElse(null);
     }
 
     @Override
     public Vehicle addVehicle(Vehicle vehicle) throws FileNotFoundException,
             IOException, SQLException {
-        return this.vehicleDao.addVehicle(vehicle);
+                
+        return this.vehicleRepo.save(vehicle);
     }
     
     @Override
@@ -60,7 +68,14 @@ public class CarDealershipVehicleServiceImpl implements
 
     @Override
     public boolean deleteVehicleById(int id) throws IOException {
-        return this.vehicleDao.deleteVehicleById(id);
+         try {
+            vehicleRepo.deleteById(id);
+         }
+         catch(EntityNotFoundException e){
+            System.out.println("vehicle id " + id + " do not exist");
+            return false;
+         }
+         return true;
     }
 
     @Override

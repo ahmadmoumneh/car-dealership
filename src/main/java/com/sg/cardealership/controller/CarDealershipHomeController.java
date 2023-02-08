@@ -45,7 +45,7 @@ public class CarDealershipHomeController implements CarDealershipVehicleType {
     
     @GetMapping("/featured")
     public List<Vehicle> getFeaturedVehicles() throws IOException, SQLException {
-        return this.vehicleService.getVehicles(FEATURED);
+        return this.vehicleService.getFeaturedVehicles(FEATURED);
     }
     
     @PostMapping("/addcontact")

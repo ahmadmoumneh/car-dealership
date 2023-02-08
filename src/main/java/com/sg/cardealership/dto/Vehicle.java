@@ -5,6 +5,10 @@
 package com.sg.cardealership.dto;
 
 import com.sg.cardealership.common.CarDealershipVehicleType;
+
+
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,21 +19,40 @@ import org.springframework.jdbc.core.RowMapper;
  *
  * @author Car Dealers
  */
+@Entity
 public class Vehicle implements CarDealershipVehicleType {
+    @Column
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
     private int vehicleId;
+    @Column
     private String vehicleType;
+    @ManyToOne
+    @JoinColumn(name="modelId", nullable = false)
     private Model model;
+    @Column
     private int year;
+    @Column
     private String bodyStyle;
+    @Column
     private String transmission;
+    @Column
     private String color;
+    @Column
     private String interior;
+    @Column
     private int mileage;
+    @Column
     private String vin; 
+    @Column
     private BigDecimal salePrice;
+    @Column
     private BigDecimal msrp;
+    @Column
     private String description;
+    @Column
     private boolean isSold;
+    @Column
     private boolean isFeatured;
     
     public Vehicle(){}
@@ -118,11 +141,11 @@ public class Vehicle implements CarDealershipVehicleType {
         this.vehicleId = id;
     }
     
-    public final void setVehicleType(String vehicleType) {
+    public  void setVehicleType(String vehicleType) {
         this.vehicleType = vehicleType;
     }
 
-    public final void setVehicleType() {
+    public  void setVehicleType() {
         if (this.mileage < 1000)
             this.vehicleType = NEW;
         

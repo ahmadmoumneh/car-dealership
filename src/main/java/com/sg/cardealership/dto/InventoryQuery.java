@@ -19,7 +19,7 @@ public class InventoryQuery {
     private String maxYear;
     private String userRole;
     private String sql;
-    
+
     private static int ids;
     
     public static final String NO_MAX_PRICE = "1000000";
