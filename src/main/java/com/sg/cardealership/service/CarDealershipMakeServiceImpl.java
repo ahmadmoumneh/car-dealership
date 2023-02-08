@@ -22,23 +22,23 @@ public class CarDealershipMakeServiceImpl implements
        CarDealershipMakeService {
     
     @Autowired
-    private  CarDealershipMakeDao makeDao;
+    private  MakeRepo makeRepo;
 
     @Override
     public Make addMake(Make make) throws FileNotFoundException, 
             IOException, SQLException {
         
-        return makeDao.addMake(make);
+        return makeRepo.save(make);
     }
 
     @Override
     public List<Make> getAllMakes() {
-        return makeDao.getAllMakes();
+        return makeRepo.findAll();
     }
 
     @Override
     public Make getMakeById(int id) {
-        return makeDao.getMakeById(id);
+        return makeRepo.findById(id).orElse(null);
     }
     
 }

@@ -37,11 +37,11 @@ public interface CarDealershipVehicleService {
     
     boolean deleteVehicleById(int id) throws IOException;
     
-    boolean editVehicle(Vehicle vehicle) throws
+    Vehicle editVehicle(Vehicle vehicle) throws
             SQLException;
     
     boolean editPictureById(int id, byte[] picture) throws
             IOException, SQLException;
     
-    boolean sellVehicleById(int id) throws IOException, SQLException;
+    Vehicle sellVehicleById(int id) throws IOException, SQLException;
 }

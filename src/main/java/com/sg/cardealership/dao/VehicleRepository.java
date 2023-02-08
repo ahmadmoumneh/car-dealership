@@ -17,6 +17,7 @@ public interface VehicleRepository extends JpaRepository<Vehicle,Integer>{
     List<Vehicle> findByIsFeatured(boolean isFeatured);
     List<Vehicle> findByModel(Model model);
     List<Vehicle> findByYear(String year);
+    
     // List<Vehicle> findSalePriceBetween(String minPrice, String maxPrice);
    // List<Vehicle> findYearBetween(String minYear, String maxYear);
 

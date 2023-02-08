@@ -3,7 +3,7 @@ import { User } from "src/app/classes/user";
 
 export const requiredValidator = (fieldName: string): ValidatorFn => {
   return (control: AbstractControl): ValidationErrors | null => {
-    const valid = control.value;
+    const valid = control.value || control.dirty;
     return !valid? {Required: {message: `${fieldName} is required.`}} : null;
   }
 };

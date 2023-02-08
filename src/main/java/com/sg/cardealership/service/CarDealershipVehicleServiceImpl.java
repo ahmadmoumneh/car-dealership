@@ -55,7 +55,7 @@ public class CarDealershipVehicleServiceImpl implements
     @Override
     public Vehicle addVehicle(Vehicle vehicle) throws FileNotFoundException,
             IOException, SQLException {
-                
+
         return this.vehicleRepo.save(vehicle);
     }
     
@@ -79,8 +79,8 @@ public class CarDealershipVehicleServiceImpl implements
     }
 
     @Override
-    public boolean editVehicle(Vehicle vehicle) throws SQLException {
-        return this.vehicleDao.updateVehicle(vehicle);
+    public Vehicle editVehicle(Vehicle vehicle) throws SQLException {
+        return this.vehicleRepo.save(vehicle);
     }
     
     @Override
@@ -91,9 +91,9 @@ public class CarDealershipVehicleServiceImpl implements
     }
 
     @Override
-    public boolean sellVehicleById(int id) throws IOException, SQLException {
-        Vehicle vehicle = this.vehicleDao.getVehicleById(id);
+    public Vehicle sellVehicleById(int id) throws IOException, SQLException {
+        Vehicle vehicle = vehicleRepo.findById(id).orElse(null);
         vehicle.setIsSold(true);
-        return this.vehicleDao.updateVehicle(vehicle);
+        return vehicleRepo.save(vehicle);
     }
 }
