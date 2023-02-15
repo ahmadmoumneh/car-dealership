@@ -22,20 +22,20 @@ public class CarDealershipModelServiceImpl implements
       CarDealershipModelService {
     
     @Autowired
-    private CarDealershipModelDao modelDao;
+    private ModelRepo modelRepo;
     
     @Override
     public Model addModel(Model model) throws IOException, FileNotFoundException, SQLException {
-        return modelDao.addModel(model);
+        return modelRepo.save(model);
     }
 
     @Override
     public List<Model> getAllModels() {
-         return modelDao.getAllModels();
+         return modelRepo.findAll();
     }
 
     @Override
     public Model getModelById(int id) {
-        return modelDao.getModelById(id);
+        return modelRepo.findById(id).orElse(null);
     }
 }

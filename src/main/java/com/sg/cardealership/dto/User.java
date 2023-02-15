@@ -9,16 +9,30 @@ import java.sql.SQLException;
 import java.util.Objects;
 import org.springframework.jdbc.core.RowMapper;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 /**
  *
  * @author Car Dealers
  */
+@Entity
 public class User {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private int userId;
+    @Column
     private String firstName;
+    @Column
     private String lastName;
+    @Column
     private String email;
+    @Column
     private String password;
+    @Column
     private String role;
     
     public User() {}

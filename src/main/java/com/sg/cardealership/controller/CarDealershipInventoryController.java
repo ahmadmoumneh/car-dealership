@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.sg.cardealership.controller;
-
 import com.sg.cardealership.common.CarDealershipVehicleType;
 import com.sg.cardealership.dto.InventoryQuery;
 import com.sg.cardealership.dto.Vehicle;
@@ -75,4 +74,5 @@ public class CarDealershipInventoryController implements CarDealershipVehicleTyp
        
         return response.orElse(new ResponseEntity(null, HttpStatus.NOT_FOUND));
     }
+    
 }

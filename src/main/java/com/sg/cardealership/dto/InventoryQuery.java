@@ -19,7 +19,7 @@ public class InventoryQuery {
     private String maxYear;
     private String userRole;
     private String sql;
-    
+
     private static int ids;
     
     public static final String NO_MAX_PRICE = "1000000";
@@ -35,7 +35,6 @@ public class InventoryQuery {
         this.minYear = minYear.isEmpty()? NO_MIN_YEAR : minYear;
         this.maxYear = maxYear.isEmpty()? NO_MAX_YEAR : maxYear;
         this.userRole = userRole;
-        System.out.println(minPrice);
         this.generateSql();
     }
 
@@ -46,7 +45,7 @@ public class InventoryQuery {
     public String getValue() {
         return value;
     }
-    
+
     public String getSql() {
         return sql;
     }

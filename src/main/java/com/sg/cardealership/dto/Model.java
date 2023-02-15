@@ -10,15 +10,26 @@ import java.time.LocalDate;
 import java.util.Objects;
 import org.springframework.jdbc.core.RowMapper;
 
+import jakarta.persistence.*;
+
 /**
  *
  * @author Car Dealers
  */
+@Entity
 public class Model {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
     private int modelId;
+    @Column
     private String modelName;
+    @ManyToOne
+    @JoinColumn (name="makeId")
     private Make modelMake;
+    @ManyToOne
+    @JoinColumn(name = "userId")
     private User modelUser;
+    @Column
     private LocalDate modelDate;
     
     public Model() {}

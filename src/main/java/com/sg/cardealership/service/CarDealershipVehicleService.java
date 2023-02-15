@@ -16,7 +16,7 @@ import java.util.List;
  * @author Car Dealers
  */
 public interface CarDealershipVehicleService {
-    List<Vehicle> getVehicles(boolean isFeatured) throws 
+    List<Vehicle> getFeaturedVehicles(boolean isFeatured) throws 
             IOException, SQLException;
     
     List<Vehicle> getVehicles(InventoryQuery query, String type) throws
@@ -37,11 +37,11 @@ public interface CarDealershipVehicleService {
     
     boolean deleteVehicleById(int id) throws IOException;
     
-    boolean editVehicle(Vehicle vehicle) throws
+    Vehicle editVehicle(Vehicle vehicle) throws
             SQLException;
     
     boolean editPictureById(int id, byte[] picture) throws
             IOException, SQLException;
     
-    boolean sellVehicleById(int id) throws IOException, SQLException;
+    Vehicle sellVehicleById(int id) throws IOException, SQLException;
 }

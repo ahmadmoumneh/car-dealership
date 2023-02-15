@@ -85,9 +85,8 @@ public class CarDealershipAdminController {
     
     @PutMapping("/editvehicle")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public boolean editVehicle(@RequestBody Vehicle vehicle) 
+    public Vehicle editVehicle(@RequestBody Vehicle vehicle) 
             throws SQLException {
-        
         return this.vehicleService.editVehicle(vehicle);
     }
     
