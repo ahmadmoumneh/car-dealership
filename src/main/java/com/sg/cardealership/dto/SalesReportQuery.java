@@ -60,12 +60,12 @@ public class SalesReportQuery {
                 + " " + user.getLastName())
                 .collect(Collectors.toList());
         
-        this.sql = "SELECT CONCAT(u.firstName, ' ', u.lastName) AS name, "
+        this.sql = "SELECT CONCAT(u.first_name, ' ', u.last_name) AS name, "
                 + "totalSales, totalVehicles FROM user u JOIN "
-                + "(SELECT userId, SUM(price) AS totalSales, COUNT(purchaseId) "
+                + "(SELECT user_id, SUM(price) AS totalSales, COUNT(purchase_id) "
                 + "AS totalVehicles FROM purchase WHERE date BETWEEN "
-                + "? AND ? GROUP BY userId) AS r ON u.userId = r.userId " 
-                + "WHERE CONCAT(u.firstName, ' ', u.lastName) "
+                + "? AND ? GROUP BY user_id) AS r ON u.user_id = r.user_id " 
+                + "WHERE CONCAT(u.first_name, ' ', u.last_name) "
                 + "IN (" + placeholders(argsList) + ")";
         
         argsList.add(0, endDate);

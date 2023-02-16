@@ -53,16 +53,16 @@ public class InventoryQuery {
     public final void generateSql() {
         boolean isValueNumeric = isNumeric(this.value);
         
-        this.sql = "SELECT v.* FROM vehicle v JOIN model md ON v.modelId = "
-                + "md.modelId JOIN make mk ON md.makeId = mk.makeId WHERE " + 
+        this.sql = "SELECT v.* FROM vehicle v JOIN model md ON v.model_id = "
+                + "md.model_id JOIN make mk ON md.make_id = mk.make_id WHERE " + 
                 (isValueNumeric?  "year = " + this.value : 
-                ("(md.modelName LIKE '%" + this.value + "%' OR mk.makeName LIKE '%" + 
+                ("(md.model_name LIKE '%" + this.value + "%' OR mk.make_name LIKE '%" + 
                 this.value + "%')")) + " AND (" + 
-                "salePrice BETWEEN " + this.minPrice + 
+                "sale_price BETWEEN " + this.minPrice + 
                 " AND " + this.maxPrice + ")" + (!isValueNumeric? 
                 (" AND (year BETWEEN " + this.minYear + " AND " 
                 + this.maxYear + ")") : "") + (this.userRole.equals("Admin")? 
-                " AND isSold = 0" : "");
+                " AND is_sold = 0" : "");
     }
     
     public void appendSql(String sql) {

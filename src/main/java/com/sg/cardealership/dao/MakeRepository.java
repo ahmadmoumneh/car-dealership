@@ -1,10 +1,8 @@
 package com.sg.cardealership.dao;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import com.sg.cardealership.dto.Make;
 import org.springframework.stereotype.Repository;
 
-import com.sg.cardealership.dto.Model;
-
-
-
 @Repository
-public interface ModelRepository extends JpaRepository<Model,Integer> {}
+public interface MakeRepository extends JpaRepository<Make, Integer> {}

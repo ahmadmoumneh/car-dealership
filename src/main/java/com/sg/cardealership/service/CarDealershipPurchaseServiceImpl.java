@@ -5,6 +5,7 @@
 package com.sg.cardealership.service;
 
 import com.sg.cardealership.dao.CarDealershipPurchaseDao;
+import com.sg.cardealership.dao.PurchaseRepository;
 import com.sg.cardealership.dto.Purchase;
 import com.sg.cardealership.dto.Vehicle;
 import java.math.BigDecimal;
@@ -22,11 +23,11 @@ public class CarDealershipPurchaseServiceImpl implements
         CarDealershipPurchaseService {
     
     @Autowired
-    private CarDealershipPurchaseDao purchaseDao;
+    private PurchaseRepository purchaseDao;
     
     @Override
     public List<Purchase> getAllPurchases() {
-         return purchaseDao.getAllPurchases();
+         return purchaseDao.findAll();
     }
     
     @Override
@@ -46,7 +47,7 @@ public class CarDealershipPurchaseServiceImpl implements
                     "Purchase price cannot exceed the MSRP.");
         }
         
-        return purchaseDao.addPurchase(purchase);
+        return purchaseDao.save(purchase);
     }
     
     public boolean validatePurchase(Purchase purchase, Vehicle vehicle) {

@@ -10,6 +10,7 @@ import com.sg.cardealership.common.CarDealershipVehicleType;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
@@ -21,9 +22,8 @@ import org.springframework.jdbc.core.RowMapper;
  */
 @Entity
 public class Vehicle implements CarDealershipVehicleType {
-    @Column
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int vehicleId;
     @Column
     private String vehicleType;
@@ -50,9 +50,9 @@ public class Vehicle implements CarDealershipVehicleType {
     private BigDecimal msrp;
     @Column
     private String description;
-    @Column
+    @Column(columnDefinition="tinyint default 0")
     private boolean isSold;
-    @Column
+    @Column(columnDefinition="tinyint default 0")
     private boolean isFeatured;
     
     public Vehicle(){}
@@ -145,7 +145,7 @@ public class Vehicle implements CarDealershipVehicleType {
         this.vehicleType = vehicleType;
     }
 
-    public  void setVehicleType() {
+    public final void setVehicleType() {
         if (this.mileage < 1000)
             this.vehicleType = NEW;
         
@@ -211,20 +211,20 @@ public class Vehicle implements CarDealershipVehicleType {
         @Override
         public Vehicle mapRow(ResultSet rs, int rowNum) throws SQLException {
             Vehicle vehicle = new Vehicle();
-            vehicle.setVehicleId(rs.getInt("vehicleId"));
-            vehicle.setVehicleType(rs.getString("vehicleType"));
+            vehicle.setVehicleId(rs.getInt("vehicle_id"));
+            vehicle.setVehicleType(rs.getString("vehicle_type"));
             vehicle.setYear(rs.getInt("year"));
-            vehicle.setBodyStyle(rs.getString("bodyStyle"));
+            vehicle.setBodyStyle(rs.getString("body_style"));
             vehicle.setTransmission(rs.getString("transmission"));
             vehicle.setColor(rs.getString("color"));
             vehicle.setInterior(rs.getString("interior"));
             vehicle.setMileage(rs.getInt("mileage"));
             vehicle.setVin(rs.getString("vin"));
-            vehicle.setSalePrice(rs.getBigDecimal("salePrice"));
+            vehicle.setSalePrice(rs.getBigDecimal("sale_price"));
             vehicle.setMsrp(rs.getBigDecimal("msrp"));
             vehicle.setDescription(rs.getString("description"));
-            vehicle.setIsSold(rs.getBoolean("isSold"));
-            vehicle.setIsFeatured(rs.getBoolean("isFeatured"));
+            vehicle.setIsSold(rs.getBoolean("is_sold"));
+            vehicle.setIsFeatured(rs.getBoolean("is_featured"));
             
             return vehicle;
         }
@@ -311,4 +311,14 @@ public class Vehicle implements CarDealershipVehicleType {
                 + ", isSold=" + isSold + ", isFeatured=" 
                 + isFeatured + '}';
     }
+}
+
+@Entity
+class Picture {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    int vehicleId;
+    
+    @Column(columnDefinition="longblob")
+    Blob content;
 }

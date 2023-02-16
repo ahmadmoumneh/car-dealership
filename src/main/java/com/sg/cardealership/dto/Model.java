@@ -86,9 +86,9 @@ public class Model {
         @Override
         public Model mapRow(ResultSet rs, int rowNum) throws SQLException {
             Model model = new Model();
-            model.setModelId(rs.getInt("modelId"));
-            model.setModelName(rs.getString("modelName"));
-            model.setModelDate(rs.getDate("modelDate")
+            model.setModelId(rs.getInt("model_id"));
+            model.setModelName(rs.getString("model_name"));
+            model.setModelDate(rs.getDate("model_date")
                     .toLocalDate());
             
             return model;

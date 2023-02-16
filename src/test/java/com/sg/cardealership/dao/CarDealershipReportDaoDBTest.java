@@ -47,11 +47,11 @@ public class CarDealershipReportDaoDBTest implements
         CarDealershipVehicleType {
     
     @Autowired private CarDealershipReportDao reportDao;
-    @Autowired private CarDealershipUserDao userDao;
-    @Autowired private CarDealershipPurchaseDao purchaseDao;
-    @Autowired private CarDealershipMakeDao makeDao;
-    @Autowired private CarDealershipModelDao modelDao;
-    @Autowired private CarDealershipVehicleDao vehicleDao;
+    @Autowired private UserRepository userDao;
+    @Autowired private PurchaseRepository purchaseDao;
+    @Autowired private MakeRepository makeDao;
+    @Autowired private ModelRepository modelDao;
+    @Autowired private VehicleRepository vehicleDao;
     
     private Vehicle vehicle;
     private Vehicle vehicle2;
@@ -84,52 +84,47 @@ public class CarDealershipReportDaoDBTest implements
     @BeforeAll
     public void setUpClass() throws SQLException, IOException {
         
-        user = userDao.addUser(new User("Mary", "Simons", 
+        user = userDao.save(new User("Mary", "Simons", 
                 "mary.simons@email.com", "vcbdr", SALES));
         
-        purchaseDao.addPurchase(new Purchase("Tom", "218-232-3456", 
+        purchaseDao.save(new Purchase("Tom", "218-232-3456", 
                 "tom@email.com", "Park Avenue", "App. 505", "New York", 
                 "NY", "25035", new BigDecimal("23000"), CASH, 
                 LocalDate.now(), user));
         
-        purchaseDao.addPurchase(new Purchase("Sally", "213-675-0463", 
+        purchaseDao.save(new Purchase("Sally", "213-675-0463", 
                 "sally@email.com", "Mulholland Drive", "Unit. 1612", "Los Angeles", 
                 "CA", "09456", new BigDecimal("162000"), BANK_FINANCE, 
                 LocalDate.parse("2020-04-23", DATE_FORMATTER), user));
         
-        make = makeDao.addMake(
+        make = makeDao.save(
                 new Make("BMW", user, TODAY));
         
-        model = modelDao.addModel(
+        model = modelDao.save(
                 new Model("BMW X5", make, user,
                         TODAY));
         
-        vehicle = vehicleDao.addVehicle(new Vehicle(model, year, bodyStyle,
+        vehicle = vehicleDao.save(new Vehicle(model, year, bodyStyle,
                 transmission, color, interior, mileage, vin, salePrice,
                 msrp, description));
         
-        vehicle2 = vehicleDao.addVehicle(new Vehicle(model, year, bodyStyle,
+        vehicle2 = vehicleDao.save(new Vehicle(model, year, bodyStyle,
                 transmission2, color2, interior, mileage2, vin2, salePrice2,
                 msrp2, description));
     }
     
     @AfterAll
     public void tearDownClass() throws IOException {
-        purchaseDao.deleteAllPurchases();
-        purchaseDao.resetAutoIncrement(0);
+        purchaseDao.deleteAll();
         
-        vehicleDao.deleteVehicleById(vehicle.getVehicleId());
-        vehicleDao.deleteVehicleById(vehicle2.getVehicleId());
-        vehicleDao.resetVehicleAutoIncrement(0);
+        vehicleDao.deleteById(vehicle.getVehicleId());
+        vehicleDao.deleteById(vehicle2.getVehicleId());
         
-        modelDao.deleteModelById(model.getModelId());
-        modelDao.resetAutoIncrement(0);
+        modelDao.deleteById(model.getModelId());
         
-        makeDao.deleteMakeById(make.getMakeId());
-        makeDao.resetAutoIncrement(0);
+        makeDao.deleteById(make.getMakeId());
         
-        userDao.deleteUserById(user.getUserId());
-        userDao.resetAutoIncrement(0);
+        userDao.deleteById(user.getUserId());
     }
     
     @BeforeEach
@@ -145,7 +140,7 @@ public class CarDealershipReportDaoDBTest implements
      */
     @Test
     public void testGenerateSalesReport() {
-        List<User> users = userDao.getAllUsers();
+        List<User> users = userDao.findAll();
         
         SalesReportQuery query = new SalesReportQuery(users,
                 LocalDate.parse("2018-12-06",DATE_FORMATTER),

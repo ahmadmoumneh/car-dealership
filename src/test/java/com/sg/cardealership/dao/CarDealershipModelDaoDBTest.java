@@ -18,7 +18,6 @@ import org.junit.jupiter.api.AfterAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -38,13 +37,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class CarDealershipModelDaoDBTest implements CarDealershipUserRole {
     
     @Autowired
-    private CarDealershipModelDao modelDao;
+    private ModelRepository modelDao;
     
     @Autowired
-    private CarDealershipMakeDao makeDao;
+    private MakeRepository makeDao;
     
     @Autowired
-    private CarDealershipUserDao userDao;
+    private UserRepository userDao;
     
     private Make make;
     private Model model;
@@ -58,25 +57,22 @@ public class CarDealershipModelDaoDBTest implements CarDealershipUserRole {
             FileNotFoundException, 
             SQLException {
         
-        user = userDao.addUser(new User("John", "Doe", 
+        user = userDao.save(new User("John", "Doe", 
                 "john.doe@email.com", "abc123", ADMIN));
         
-        make = makeDao.addMake(
+        make = makeDao.save(
                 new Make("BMW", user, TODAY));
         
-        model = modelDao.addModel(
+        model = modelDao.save(
                 new Model("BMW X7", make, user,
                         TODAY));
     }
     
     @AfterAll
     public void tearDownClass() {
-        modelDao.deleteModelById(model.getModelId());
-        modelDao.resetAutoIncrement(0);
-        makeDao.deleteMakeById(make.getMakeId());
-        makeDao.resetAutoIncrement(0);
-        userDao.deleteUserById(user.getUserId());
-        userDao.resetAutoIncrement(0);
+        modelDao.deleteById(model.getModelId());
+        makeDao.deleteById(make.getMakeId());
+        userDao.deleteById(user.getUserId());
     }
     
     @BeforeEach
@@ -95,17 +91,15 @@ public class CarDealershipModelDaoDBTest implements CarDealershipUserRole {
     @Test
     public void testAddModel() throws Exception {
         
-        Model bmw_x5 = modelDao.addModel(new Model("BMW X5", 
+        Model bmw_x5 = modelDao.save(new Model("BMW X5", 
                 make, user, TODAY));
         
-        Model querried = modelDao.getModelById(bmw_x5.getModelId());
+        Model querried = modelDao.findById(bmw_x5.getModelId()).get();
         
         assertNotNull(querried);
         assertEquals(bmw_x5, querried);
         
-        boolean deleteSuccess = modelDao.deleteModelById(bmw_x5.getModelId());
-        
-        assertTrue(deleteSuccess);
+        modelDao.deleteById(bmw_x5.getModelId());
     }
 
     /**
@@ -114,7 +108,7 @@ public class CarDealershipModelDaoDBTest implements CarDealershipUserRole {
    
     @Test
     public void testGetAllModels() {
-        List<Model> models = modelDao.getAllModels();
+        List<Model> models = modelDao.findAll();
         
         assertFalse(models.isEmpty());
     }
@@ -125,7 +119,7 @@ public class CarDealershipModelDaoDBTest implements CarDealershipUserRole {
     
     @Test
     public void testGetModelById() {
-        Model querried = modelDao.getModelById(model.getModelId());
+        Model querried = modelDao.findById(model.getModelId()).get();
         
         assertNotNull(querried);
         assertEquals(model, querried);

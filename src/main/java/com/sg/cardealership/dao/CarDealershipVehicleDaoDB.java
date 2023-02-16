@@ -46,7 +46,7 @@ public class CarDealershipVehicleDaoDB implements
     public List<Vehicle> getVehicles(boolean isFeatured) throws 
             IOException, SQLException {
         
-        final String sql = "SELECT * FROM vehicle  WHERE isFeatured = ?";
+        final String sql = "SELECT * FROM vehicle  WHERE is_featured = ?";
         List<Vehicle> vehicles = jdbc.query(sql, new VehicleMapper(), isFeatured? 1 : 0);
         loadVehicles(vehicles);
         return vehicles;
@@ -56,7 +56,7 @@ public class CarDealershipVehicleDaoDB implements
     public List<Vehicle> getVehicles(InventoryQuery query, String vehicleType) throws 
             IOException, SQLException {
         
-        String SEARCH_SQL = " AND (vehicleType = '" + vehicleType +"')";
+        String SEARCH_SQL = " AND (vehicle_type = '" + vehicleType +"')";
         query.appendSql(SEARCH_SQL);
         System.out.println(query.getSql());
         List<Vehicle> vehicles = jdbc.query(query.getSql(), new VehicleMapper());
@@ -88,8 +88,8 @@ public class CarDealershipVehicleDaoDB implements
             IOException, SQLException {
         
         final String insertVehicle = 
-                "INSERT INTO vehicle(vehicleType, modelId, year, bodyStyle, " +
-                "transmission, color, interior, mileage, vin, salePrice, msrp, "+
+                "INSERT INTO vehicle(vehicle_type, model_id, year, body_style, " +
+                "transmission, color, interior, mileage, vin, sale_price, msrp, "+
                 "description) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         
         GeneratedKeyHolder kh = new GeneratedKeyHolder();
@@ -131,7 +131,7 @@ public class CarDealershipVehicleDaoDB implements
     @Transactional
     public boolean deleteVehicleById(int id) throws IOException {
         boolean deletePicture = deletePictureById(id);
-        final String DELETE_BY_ID = "DELETE FROM vehicle where vehicleId = ? ";
+        final String DELETE_BY_ID = "DELETE FROM vehicle where vehicle_id = ? ";
         return jdbc.update(DELETE_BY_ID, id) > 0 && deletePicture;
     }
 
@@ -140,10 +140,10 @@ public class CarDealershipVehicleDaoDB implements
     public boolean updateVehicle(Vehicle vehicle)
             throws SQLException {
         System.out.println(vehicle);
-        final String EDIT_VEHICLE = "UPDATE vehicle SET vehicleType = ?, " +
-        "year = ?, bodyStyle = ?, transmission = ?, color = ?, interior = ?, " +
-        "mileage = ?, vin = ?, salePrice = ?, msrp = ?, description = ?, "+
-        "modelId = ?, isFeatured = ?, isSold = ? WHERE vehicleId = ?";
+        final String EDIT_VEHICLE = "UPDATE vehicle SET vehicle_type = ?, " +
+        "year = ?, body_style = ?, transmission = ?, color = ?, interior = ?, " +
+        "mileage = ?, vin = ?, sale_price = ?, msrp = ?, description = ?, "+
+        "model_id = ?, is_featured = ?, is_sold = ? WHERE vehicle_id = ?";
         
         return jdbc.update(EDIT_VEHICLE,
         vehicle.getVehicleType(),
@@ -205,7 +205,7 @@ public class CarDealershipVehicleDaoDB implements
     @Override
     public byte[] getPictureById(int id) throws SQLException {
         try {
-            final String sql = "SELECT content FROM picture WHERE vehicleId = ?;";
+            final String sql = "SELECT content FROM picture WHERE vehicle_id = ?;";
             Blob blob = 
                     jdbc.queryForObject(sql, Blob.class, id);
 
@@ -217,7 +217,7 @@ public class CarDealershipVehicleDaoDB implements
     
     @Override
     public Vehicle getVehicleById(int id) throws IOException, SQLException {
-        final String sql = "SELECT * FROM vehicle WHERE vehicleId = ?";
+        final String sql = "SELECT * FROM vehicle WHERE vehicle_id = ?";
 
         Vehicle vehicle = jdbc.queryForObject(sql,
                 new VehicleMapper(), id);
@@ -230,8 +230,8 @@ public class CarDealershipVehicleDaoDB implements
     
     private void addMakeForModel(Model model) {
         final String sql = "SELECT mk.* FROM make mk "
-                + "JOIN model md ON mk.makeId = md.makeId "
-                 + "WHERE md.modelId = ?";
+                + "JOIN model md ON mk.make_id = md.make_id "
+                 + "WHERE md.model_id = ?";
          
         Make make = jdbc.queryForObject(sql, new MakeMapper(), 
                model.getModelId());
@@ -243,7 +243,7 @@ public class CarDealershipVehicleDaoDB implements
     
     private void addUserForMake(Make make) {
         final String sql = "SELECT u.* FROM user u "
-                + "JOIN make m ON u.userId = m.userId WHERE m.makeId = ?";
+                + "JOIN make m ON u.user_id = m.user_id WHERE m.make_id = ?";
         User user = jdbc.queryForObject(sql, new User.UserMapper(), 
                 make.getMakeId());
         
@@ -252,7 +252,7 @@ public class CarDealershipVehicleDaoDB implements
     
     private void addUserForModel(Model model) {
         final String sql = "SELECT u.* FROM user u "
-                + "JOIN model m ON u.userId = m.userId WHERE m.modelId = ?";
+                + "JOIN model m ON u.user_id = m.user_id WHERE m.model_id = ?";
         
         User user = jdbc.queryForObject(sql, new User.UserMapper(), 
                 model.getModelId());
@@ -262,8 +262,8 @@ public class CarDealershipVehicleDaoDB implements
     
     private void addModelForVehicle(Vehicle vehicle) {
         final String sql = "SELECT m.* FROM model m "
-                + "JOIN vehicle v ON m.modelId = v.modelId "
-                + "WHERE v.vehicleId = ?";
+                + "JOIN vehicle v ON m.model_id = v.model_id "
+                + "WHERE v.vehicle_id = ?";
         
         Model model = jdbc.queryForObject(sql, new ModelMapper(), 
                 vehicle.getVehicleId());
@@ -309,7 +309,7 @@ public class CarDealershipVehicleDaoDB implements
         
         boolean deleteAsset = asset.delete();
         
-        final String DELETE_BY_ID = "DELETE FROM picture where vehicleId = ? ";
+        final String DELETE_BY_ID = "DELETE FROM picture where vehicle_id = ? ";
         return jdbc.update(DELETE_BY_ID, id) > 0 && deleteAsset;
     }
 
@@ -317,7 +317,7 @@ public class CarDealershipVehicleDaoDB implements
     @Transactional
     public boolean uploadPictureById(int id, byte[] picture) throws IOException, SQLException {
         final String INSERT_PICTURE = 
-                "INSERT INTO picture(content, vehicleId) VALUES (?,?)";
+                "INSERT INTO picture(content, vehicle_id) VALUES (?,?)";
         return savePictureById(id, picture, INSERT_PICTURE);
     }
 
@@ -325,10 +325,8 @@ public class CarDealershipVehicleDaoDB implements
     @Transactional
     public boolean updatePictureById(int id, byte[] picture) throws IOException, SQLException {
         final String UPDATE_PICTURE = 
-                "UPDATE picture SET content = ? WHERE vehicleId = ?";
+                "UPDATE picture SET content = ? WHERE vehicle_id = ?";
         
         return savePictureById(id, picture, UPDATE_PICTURE);
     }
-
-    
 }

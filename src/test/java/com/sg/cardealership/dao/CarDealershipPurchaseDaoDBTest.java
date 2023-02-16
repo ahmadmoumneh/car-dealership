@@ -34,10 +34,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class CarDealershipPurchaseDaoDBTest implements CarDealershipUserRole {
     
     @Autowired
-    private CarDealershipUserDao userDao;
+    private UserRepository userDao;
     
     @Autowired
-    private CarDealershipPurchaseDao purchaseDao;
+    private PurchaseRepository purchaseDao;
     
     private User user;
     
@@ -56,7 +56,7 @@ public class CarDealershipPurchaseDaoDBTest implements CarDealershipUserRole {
     private final String CITY = "New York";
     private final String STATE = "NY";
     private final String ZIPCODE = "23352";
-    private final BigDecimal PRICE = new BigDecimal("10500");
+    private final BigDecimal PRICE = new BigDecimal("10500.00");
     private final String PURCHASE_TYPE = "Cash";
     private final LocalDate DATE = LocalDate.now();
     
@@ -66,11 +66,11 @@ public class CarDealershipPurchaseDaoDBTest implements CarDealershipUserRole {
             FileNotFoundException, 
             SQLException {
         
-        user = userDao.addUser(new User(SALES_FIRST_NAME, 
+        user = userDao.save(new User(SALES_FIRST_NAME, 
                 SALES_LAST_NAME, SALES_EMAIL, SALES_PASSWORD, 
                 SALES));
         
-        purchase = purchaseDao.addPurchase(new Purchase(NAME, PHONE,
+        purchase = purchaseDao.save(new Purchase(NAME, PHONE,
                 EMAIL, STREET1, STREET2, CITY, STATE, ZIPCODE, PRICE,
                 PURCHASE_TYPE,DATE, user));
        
@@ -78,10 +78,8 @@ public class CarDealershipPurchaseDaoDBTest implements CarDealershipUserRole {
     
     @AfterAll
     public void tearDownClass() {
-        purchaseDao.deletePurchaseById(purchase.getPurchaseId());
-        purchaseDao.resetAutoIncrement(0);
-        userDao.deleteUserById(user.getUserId());
-        userDao.resetAutoIncrement(0);
+        purchaseDao.deleteById(purchase.getPurchaseId());
+        userDao.deleteById(user.getUserId());
     }
     
     @BeforeEach
@@ -103,7 +101,7 @@ public class CarDealershipPurchaseDaoDBTest implements CarDealershipUserRole {
         final String ADD_SALES_EMAIL = "jane.doe@email.com";
         final String ADD_SALES_PASSWORD = "apple";
         
-        User salesUser = userDao.addUser(new User(ADD_SALES_FIRST_NAME, 
+        User salesUser = userDao.save(new User(ADD_SALES_FIRST_NAME, 
                 ADD_SALES_LAST_NAME,ADD_SALES_EMAIL, 
                 ADD_SALES_PASSWORD, SALES));
 
@@ -115,26 +113,24 @@ public class CarDealershipPurchaseDaoDBTest implements CarDealershipUserRole {
         final String ADD_CITY = "New York";
         final String ADD_STATE = "NY";
         final String ADD_ZIPCODE = "23352";
-        final BigDecimal ADD_PRICE = new BigDecimal("44000");
+        final BigDecimal ADD_PRICE = new BigDecimal("44000.00");
         final String ADD_PURCHASE_TYPE = "Bank Finance";
         final LocalDate ADD_DATE = LocalDate.now();
         
-        Purchase newPurchase = purchaseDao.addPurchase(new Purchase(ADD_NAME,
+        Purchase newPurchase = purchaseDao.save(new Purchase(ADD_NAME,
                 ADD_PHONE,ADD_EMAIL, ADD_STREET1, ADD_STREET2, 
                 ADD_CITY,ADD_STATE, ADD_ZIPCODE, ADD_PRICE,
                 ADD_PURCHASE_TYPE, ADD_DATE, salesUser));
         
         Purchase querried = 
-                purchaseDao.getPurchaseById(newPurchase.getPurchaseId());
+                purchaseDao.findById(newPurchase.getPurchaseId()).get();
         
         assertNotNull(querried);
         assertEquals(newPurchase, querried);
                 
-        boolean deletePurchase = purchaseDao.deletePurchaseById(newPurchase.getPurchaseId());
-        assertTrue(deletePurchase);
+        purchaseDao.deleteById(newPurchase.getPurchaseId());
         
-        boolean deleteUser = userDao.deleteUserById(salesUser.getUserId());
-        assertTrue(deleteUser);
+        userDao.deleteById(salesUser.getUserId());
     }
 
     /**
@@ -142,7 +138,7 @@ public class CarDealershipPurchaseDaoDBTest implements CarDealershipUserRole {
      */
     @Test
     public void testGetPurchaseById() {
-        Purchase querried = purchaseDao.getPurchaseById(purchase.getPurchaseId());
+        Purchase querried = purchaseDao.findById(purchase.getPurchaseId()).get();
         
         assertNotNull(querried);
         assertEquals(purchase, querried);

@@ -17,7 +17,6 @@ import org.junit.jupiter.api.AfterAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -37,10 +36,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class CarDealershipMakeDaoDBTest implements CarDealershipUserRole {
     
     @Autowired
-    private CarDealershipMakeDao makeDao;
+    private MakeRepository makeDao;
     
     @Autowired
-    private CarDealershipUserDao userDao;
+    private UserRepository userDao;
     
     private Make make;
     
@@ -61,19 +60,17 @@ public class CarDealershipMakeDaoDBTest implements CarDealershipUserRole {
             FileNotFoundException, 
             SQLException {
         
-        user = userDao.addUser(new User(FIRST_NAME, LAST_NAME, 
+        user = userDao.save(new User(FIRST_NAME, LAST_NAME, 
                 EMAIL, PASSWORD, ADMIN));
         
-        make = makeDao.addMake(
+        make = makeDao.save(
                 new Make(MAKE_NAME, user, TODAY));
     }
     
     @AfterAll
     public void tearDownClass() {
-        makeDao.deleteMakeById(make.getMakeId());
-        makeDao.resetAutoIncrement(0);
-        userDao.deleteUserById(user.getUserId());
-        userDao.resetAutoIncrement(0);
+        makeDao.deleteById(make.getMakeId());
+        userDao.deleteById(user.getUserId());
     }
     
     @BeforeEach
@@ -90,17 +87,15 @@ public class CarDealershipMakeDaoDBTest implements CarDealershipUserRole {
      */
     @Test
     public void testAddMake() throws Exception {
-        Make ford = makeDao.addMake(new Make("Ford", user, TODAY));
+        Make ford = makeDao.save(new Make("Ford", user, TODAY));
         
-        Make querried = makeDao.getMakeById(ford.getMakeId());
+        Make querried = makeDao.findById(ford.getMakeId()).get();
         
         assertNotNull(querried);
         
         assertEquals(ford, querried);
         
-        boolean deleteSuccess = makeDao.deleteMakeById(ford.getMakeId());
-        
-        assertTrue(deleteSuccess);
+        makeDao.deleteById(ford.getMakeId());
     }
 
     /**
@@ -108,7 +103,7 @@ public class CarDealershipMakeDaoDBTest implements CarDealershipUserRole {
      */
     @Test
     public void testGetAllMakes() {
-        List<Make> makes = makeDao.getAllMakes();
+        List<Make> makes = makeDao.findAll();
         
         assertFalse(makes.isEmpty());
     }
@@ -118,7 +113,7 @@ public class CarDealershipMakeDaoDBTest implements CarDealershipUserRole {
      */
     @Test
     public void testGetMakeById() {
-        Make querried = makeDao.getMakeById(make.getMakeId());
+        Make querried = makeDao.findById(make.getMakeId()).get();
         
         assertNotNull(querried);
         assertEquals(make, querried);

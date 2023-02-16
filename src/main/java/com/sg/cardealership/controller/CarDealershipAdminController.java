@@ -31,7 +31,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -133,9 +132,9 @@ public class CarDealershipAdminController {
     @PutMapping("/edituser/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity<User> editUser(User user) throws SQLException {
-        boolean editedUser = this.userService.editUser(user);
+        User editedUser = this.userService.editUser(user);
         
-        if (!editedUser)
+        if (editedUser == null)
             return new ResponseEntity(null,HttpStatus.UNAUTHORIZED);
         
         return ResponseEntity.ok(user);
@@ -169,7 +168,7 @@ public class CarDealershipAdminController {
     
     @DeleteMapping("/deletespecial/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public boolean deleteSpecial(@PathVariable int id) {
-        return this.specialService.deleteSpecialById(id);
+    public void deleteSpecial(@PathVariable int id) {
+        this.specialService.deleteSpecialById(id);
     }
 }

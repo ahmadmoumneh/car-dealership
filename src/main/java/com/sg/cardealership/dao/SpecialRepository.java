@@ -2,19 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package com.sg.cardealership.service;
+package com.sg.cardealership.dao;
 
 import com.sg.cardealership.dto.Special;
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author Car Dealers
+ * @author ahmad
  */
-public interface CarDealershipSpecialService {
-    List<Special> getAllSpecials();
-    
-    Special addSpecial(Special special);
-    
-    void deleteSpecialById(int id);
-}
+@Repository
+public interface SpecialRepository extends JpaRepository<Special,Integer> {}

@@ -4,6 +4,13 @@
  */
 package com.sg.cardealership.dto;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,19 +22,26 @@ import org.springframework.jdbc.core.RowMapper;
  *
  * @author Car Dealers
  */
+@Entity
 public class Purchase {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int purchaseId;
-    private String name;
-    private String phone;
-    private String email;
-    private String street1;
-    private String street2;
-    private String city;
-    private String state;
-    private String zipcode;
-    private BigDecimal price;
-    private String purchaseType;
-    private LocalDate date;
+    
+    @Column private String name;
+    @Column private String phone;
+    @Column private String email;
+    @Column private String street1;
+    @Column private String street2;
+    @Column private String city;
+    @Column private String state;
+    @Column private String zipcode;
+    @Column private BigDecimal price;
+    @Column private String purchaseType;
+    @Column private LocalDate date;
+    
+    @OneToOne
+    @JoinColumn(name="userId")
     private User salesUser;
     
     public Purchase() {}
@@ -159,7 +173,7 @@ public class Purchase {
         @Override
         public Purchase mapRow(ResultSet rs, int rowNum) throws SQLException {
             Purchase purchase = new Purchase();
-            purchase.setPurchaseId(rs.getInt("purchaseId"));
+            purchase.setPurchaseId(rs.getInt("purchase_id"));
             purchase.setName(rs.getString("name"));
             purchase.setPhone(rs.getString("phone"));
             purchase.setEmail(rs.getString("email"));
@@ -170,7 +184,7 @@ public class Purchase {
             purchase.setZipcode(rs.getString("zipcode"));
             purchase.setPrice(rs.getBigDecimal("price"));
             purchase.setPurchaseType(
-                    rs.getString("purchaseType"));
+                    rs.getString("purchase_type"));
             purchase.setDate(rs.getDate("date").toLocalDate());
             
             return purchase;

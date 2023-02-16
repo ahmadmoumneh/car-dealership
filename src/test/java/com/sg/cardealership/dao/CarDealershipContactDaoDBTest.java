@@ -12,7 +12,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -32,7 +31,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class CarDealershipContactDaoDBTest {
     
     @Autowired
-    private CarDealershipContactDao contactDao;
+    private ContactRepository contactDao;
     
     private Contact contact;
     
@@ -49,14 +48,13 @@ public class CarDealershipContactDaoDBTest {
             FileNotFoundException, 
             SQLException {
         
-        contact = contactDao.addContact(new Contact(NAME, PHONE,
+        contact = contactDao.save(new Contact(NAME, PHONE,
                 EMAIL, MESSAGE));
     }
     
     @AfterAll
     public void tearDownClass() {
-        contactDao.deleteContactById(contact.getContactId());
-        contactDao.resetAutoIncrement(0);
+        contactDao.deleteById(contact.getContactId());
     }
     
     @BeforeEach
@@ -73,20 +71,17 @@ public class CarDealershipContactDaoDBTest {
      */
     @Test
     public void testAddContact() throws Exception {
-        Contact jane = contactDao.addContact(new Contact("Jane Doe", 
+        Contact jane = contactDao.save(new Contact("Jane Doe", 
                 "212-456-2463", "jane.doe@email.com", "Hi, my"
                         + " name is Jane Doe, I would like to browse for a new"
                         + " car."));
         
-        Contact querried = contactDao.getContactById(jane.getContactId());
+        Contact querried = contactDao.findById(jane.getContactId()).get();
         
         assertNotNull(querried);
         assertEquals(jane, querried);
         
-        boolean deleteSuccess = contactDao.deleteContactById(jane.getContactId());
-        
-        assertTrue(deleteSuccess);
-        
+        contactDao.deleteById(jane.getContactId());
     }
 
     /**
@@ -94,7 +89,7 @@ public class CarDealershipContactDaoDBTest {
      */
     @Test
     public void testGetContactById() {
-        Contact querried = contactDao.getContactById(contact.getContactId());
+        Contact querried = contactDao.findById(contact.getContactId()).get();
         assertEquals(contact, querried);
     }
 }

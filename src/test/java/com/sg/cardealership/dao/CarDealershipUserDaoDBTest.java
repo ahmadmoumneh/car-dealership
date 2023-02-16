@@ -36,7 +36,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class CarDealershipUserDaoDBTest implements CarDealershipUserRole {
     
     @Autowired
-    private CarDealershipUserDao userDao;
+    private UserRepository userDao;
     
     private User user;
     
@@ -51,14 +51,13 @@ public class CarDealershipUserDaoDBTest implements CarDealershipUserRole {
             FileNotFoundException, 
             SQLException {
         
-        user = userDao.addUser(new User(FIRST_NAME, LAST_NAME, 
+        user = userDao.save(new User(FIRST_NAME, LAST_NAME, 
                 EMAIL, PASSWORD, ADMIN));
     }
     
     @AfterAll
     public void tearDownClass() {
-        userDao.deleteUserById(user.getUserId());
-        userDao.resetAutoIncrement(0);
+        userDao.deleteById(user.getUserId());
     }
     
     @BeforeEach
@@ -75,17 +74,15 @@ public class CarDealershipUserDaoDBTest implements CarDealershipUserRole {
      */
     @Test
     public void testAddUser() throws Exception {
-        User matt = userDao.addUser(new User("Max", "Sims", 
+        User matt = userDao.save(new User("Max", "Sims", 
                 "max.sims@email.com", PASSWORD, ADMIN));
         
-        User querried = userDao.getUserById(matt.getUserId());
+        User querried = userDao.findById(matt.getUserId()).get();
         
         assertNotNull(querried);
         assertEquals(matt, querried);
         
-        boolean deleteSuccess = userDao.deleteUserById(matt.getUserId());
-        
-        assertTrue(deleteSuccess);
+        userDao.deleteById(matt.getUserId());
     }
 
     /**
@@ -93,7 +90,7 @@ public class CarDealershipUserDaoDBTest implements CarDealershipUserRole {
      */
     @Test
     public void testGetAllUsers() {
-        List<User> users = userDao.getAllUsers();
+        List<User> users = userDao.findAll();
         
         assertFalse(users.isEmpty());
     }
@@ -103,7 +100,7 @@ public class CarDealershipUserDaoDBTest implements CarDealershipUserRole {
      */
     @Test
     public void testGetUserById() {
-        User querried = userDao.getUserById(user.getUserId());
+        User querried = userDao.findById(user.getUserId()).get();
         
         assertNotNull(querried);
         assertEquals(user, querried);
@@ -113,43 +110,9 @@ public class CarDealershipUserDaoDBTest implements CarDealershipUserRole {
      * Test of getUserByCredentials method, of class CarDealershipUserDaoDB.
      */
     @Test
-    public void testGetUserByCredentials() {
-        String[] credentials = {user.getEmail(), user.getPassword()};
-        
-        User querried = userDao.getUserByCredentials(credentials);
+    public void testGetUserByCredentials() {        
+        User querried = userDao.findByEmailAndPassword(user.getEmail(), user.getPassword());
         assertNotNull(querried);
-    }
-    
-    /**
-     * Test of changePassword method, of class CarDealershipUserDaoDB.
-     */
-    @Test
-    public void testChangePassword() {
-        final String NEW_PASSWORD = "1234";
-        
-        user.setPassword(NEW_PASSWORD);
-        
-        boolean changeSuccess = userDao.changePassword(user);
-        
-        assertTrue(changeSuccess);
-        
-        User userWhoChangedPassword = userDao.getUserById(user.getUserId());
-        
-        assertNotNull(userWhoChangedPassword);
-        
-        assertEquals(NEW_PASSWORD, 
-                userWhoChangedPassword.getPassword());
-        
-        user.setPassword(PASSWORD);
-        
-        changeSuccess = userDao.changePassword(user);
-        
-        assertTrue(changeSuccess);
-        
-        userWhoChangedPassword = userDao.getUserById(user.getUserId());
-        assertNotNull(userWhoChangedPassword);
-        
-        assertEquals(PASSWORD, userWhoChangedPassword.getPassword());
     }
     
     @Test
@@ -176,11 +139,11 @@ public class CarDealershipUserDaoDBTest implements CarDealershipUserRole {
         user.setPassword(NEW_PASSWORD);
         user.setRole(NEW_ROLE);
         
-        boolean updateSuccess = userDao.updateUser(user);
+        userDao.save(user);
         
-        assertTrue(updateSuccess);
+        User querried = userDao.findById(user.getUserId()).get();
         
-        assertEquals(shouldUserDataBe,user);
+        assertEquals(shouldUserDataBe,querried);
                 
         user.setFirstName(FIRST_NAME);
         user.setLastName(LAST_NAME);
@@ -188,8 +151,6 @@ public class CarDealershipUserDaoDBTest implements CarDealershipUserRole {
         user.setPassword(PASSWORD);
         user.setRole(ADMIN);
         
-        updateSuccess = userDao.updateUser(user);
-        
-        assertTrue(updateSuccess);
+        userDao.save(user);
     }
 }

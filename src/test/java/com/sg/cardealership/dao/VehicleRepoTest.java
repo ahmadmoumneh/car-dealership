@@ -1,5 +1,4 @@
 package com.sg.cardealership.dao;
-import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -32,9 +31,9 @@ import com.sg.cardealership.dto.Vehicle;
 public class VehicleRepoTest implements CarDealershipVehicleType {
     
     @Autowired private CarDealershipVehicleDao vehicleDao;
-    @Autowired private CarDealershipUserDao userDao;
-    @Autowired private CarDealershipMakeDao makeDao;
-    @Autowired private CarDealershipModelDao modelDao;
+    @Autowired private UserRepository userDao;
+    @Autowired private MakeRepository makeDao;
+    @Autowired private ModelRepository modelDao;
     @Autowired private VehicleRepository vehicleRepo;
     
     private Vehicle vehicle;
@@ -103,13 +102,13 @@ public class VehicleRepoTest implements CarDealershipVehicleType {
     
     @BeforeAll
     public void setUpClass() throws SQLException, IOException {
-        user = userDao.addUser(new User("John", "Doe", 
+        user = userDao.save(new User("John", "Doe", 
                 "john.doe@email.com", "abc123", ADMIN));
         
-        make = makeDao.addMake(
+        make = makeDao.save(
                 new Make("BMW", user, TODAY));
         
-        model = modelDao.addModel(
+        model = modelDao.save(
                 new Model("BMW X5", make, user,
                         TODAY));
         

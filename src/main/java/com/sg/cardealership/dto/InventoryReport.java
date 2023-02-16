@@ -94,11 +94,11 @@ public class InventoryReport {
     }
 
     public final void generateSql() {
-        this.sql = "SELECT v.year AS year, mk.makeName AS make, md.modelName "
-                + "AS model, COUNT(v.vehicleId) AS count, SUM(v.msrp) AS "
-                + "stockValue FROM vehicle v JOIN model md ON v.modelId = "
-                + "md.modelId JOIN make mk ON md.makeId = mk.makeId WHERE "
-                + "v.vehicleType = ? GROUP BY year, make, model";
+        this.sql = "SELECT v.year AS year, mk.make_name AS make, md.model_name "
+                + "AS model, COUNT(v.vehicle_id) AS count, SUM(v.msrp) AS "
+                + "stockValue FROM vehicle v JOIN model md ON v.model_id = "
+                + "md.model_id JOIN make mk ON md.make_id = mk.make_id WHERE "
+                + "v.vehicle_type = ? GROUP BY year, make, model";
     }
     
     public final static class InventoryReportMapper implements 

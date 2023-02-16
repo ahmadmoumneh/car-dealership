@@ -4,7 +4,7 @@
  */
 package com.sg.cardealership.service;
 
-import com.sg.cardealership.dao.CarDealershipMakeDao;
+import com.sg.cardealership.dao.MakeRepository;
 import com.sg.cardealership.dto.Make;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class CarDealershipMakeServiceImpl implements
        CarDealershipMakeService {
     
     @Autowired
-    private  MakeRepo makeRepo;
+    private  MakeRepository makeRepo;
 
     @Override
     public Make addMake(Make make) throws FileNotFoundException, 

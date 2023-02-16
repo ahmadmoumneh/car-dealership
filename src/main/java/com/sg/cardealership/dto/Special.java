@@ -4,6 +4,11 @@
  */
 package com.sg.cardealership.dto;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
@@ -13,10 +18,15 @@ import org.springframework.jdbc.core.RowMapper;
  *
  * @author Car Dealers
  */
+@Entity
 public class Special {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int specialId;
-    private String title;
-    private String description;
+    
+    @Column private String title;
+    
+    @Column private String description;
     
     public Special() {}
 
@@ -53,7 +63,7 @@ public class Special {
         @Override
         public Special mapRow(ResultSet rs, int rowNum) throws SQLException {
             Special special = new Special();
-            special.setSpecialId(rs.getInt("specialId"));
+            special.setSpecialId(rs.getInt("special_id"));
             special.setTitle(rs.getString("title"));
             special.setDescription(rs.getString("description"));
             

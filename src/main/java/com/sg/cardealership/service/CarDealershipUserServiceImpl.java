@@ -5,7 +5,7 @@
 package com.sg.cardealership.service;
 
 import com.sg.cardealership.common.CarDealershipUserRole;
-import com.sg.cardealership.dao.CarDealershipUserDao;
+import com.sg.cardealership.dao.UserRepository;
 import com.sg.cardealership.dto.User;
 import java.sql.SQLException;
 import java.util.List;
@@ -21,53 +21,38 @@ public class CarDealershipUserServiceImpl implements
         CarDealershipUserService, CarDealershipUserRole {
     
     @Autowired
-    private CarDealershipUserDao userDao;
+    private UserRepository userDao;
     
     private User currentUser;
     
 
     @Override
     public List<User> getAllUsers() {
-        return this.userDao.getAllUsers();
+        return this.userDao.findAll();
     }
 
     @Override
     public User addUser(User user) throws SQLException {
 //        if (this.currentUser.getRole().equals(ADMIN)) {
-            return this.userDao.addUser(user);
+            return this.userDao.save(user);
 //        }
             
 //        return null;
     }
 
     @Override
-    public boolean editUser(User user) throws SQLException {
+    public User editUser(User user) throws SQLException {
         if (this.currentUser.getRole().equals(ADMIN)) {
-            return this.userDao.updateUser(user);
+            return this.userDao.save(user);
         }
         
-        return false;
-    }
-
-    @Override
-    public boolean changePassword(User user) {
-        if (this.currentUser.getRole().equals(ADMIN) || 
-                this.currentUser.getRole().equals(SALES)) 
-            this.userDao.changePassword(user);
-        
-        return false;
+        return null;
     }
 
     @Override
     public User login(String username, String password) {
-        String[] credentials = {username, password};
         
-        this.currentUser = this.userDao.getUserByCredentials(credentials);
+        this.currentUser = this.userDao.findByEmailAndPassword(username, password);
         return this.currentUser;
-    }
-
-    @Override
-    public void logout(int id) {
-        this.currentUser = null;
     }
 }

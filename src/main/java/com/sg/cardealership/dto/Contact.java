@@ -4,6 +4,11 @@
  */
 package com.sg.cardealership.dto;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
@@ -13,12 +18,16 @@ import org.springframework.jdbc.core.RowMapper;
  *
  * @author Car Dealers
  */
+@Entity
 public class Contact {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int contactId;
-    private String name;
-    private String phone;
-    private String email;
-    private String message;
+    
+    @Column private String name;
+    @Column private String phone;
+    @Column private String email;
+    @Column private String message;
     
     public Contact() {}
 
@@ -76,7 +85,7 @@ public class Contact {
         @Override
         public Contact mapRow(ResultSet rs, int index) throws SQLException {
             Contact contact = new Contact();
-            contact.setContactId(rs.getInt("contactId"));
+            contact.setContactId(rs.getInt("contact_id"));
             contact.setName(rs.getString("name"));
             contact.setPhone(rs.getString("phone"));
             contact.setEmail(rs.getString("email"));

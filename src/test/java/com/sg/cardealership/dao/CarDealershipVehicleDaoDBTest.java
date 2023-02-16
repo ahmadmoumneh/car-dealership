@@ -47,9 +47,9 @@ import org.junit.jupiter.api.BeforeAll;
 public class CarDealershipVehicleDaoDBTest implements CarDealershipVehicleType {
     
     @Autowired private CarDealershipVehicleDao vehicleDao;
-    @Autowired private CarDealershipUserDao userDao;
-    @Autowired private CarDealershipMakeDao makeDao;
-    @Autowired private CarDealershipModelDao modelDao;
+    @Autowired private UserRepository userDao;
+    @Autowired private MakeRepository makeDao;
+    @Autowired private ModelRepository modelDao;
     
     private Vehicle vehicle;
     private Vehicle vehicle2;
@@ -70,8 +70,8 @@ public class CarDealershipVehicleDaoDBTest implements CarDealershipVehicleType {
     private final String interior = "Black";
     private final int mileage = 300;
     private final String vin = "13ADKF28371KJDAF8";
-    private final BigDecimal salePrice = new BigDecimal("33000");
-    private final BigDecimal msrp = new BigDecimal("35000");
+    private final BigDecimal salePrice = new BigDecimal("33000.00");
+    private final BigDecimal msrp = new BigDecimal("35000.00");
     private final String description = "Small and sporty, with a hint of "
             + "luxury. This car is loaded with features including A/C, cruise "
             + "control, backup cameras and more!";
@@ -83,8 +83,8 @@ public class CarDealershipVehicleDaoDBTest implements CarDealershipVehicleType {
     private final String addInterior = "Gray";
     private final int addMileage = 3030;
     private final String addVin = "23097HDF90WRRV290";
-    private final BigDecimal addSalePrice = new BigDecimal("41200");
-    private final BigDecimal addMsrp = new BigDecimal("45000");
+    private final BigDecimal addSalePrice = new BigDecimal("41200.00");
+    private final BigDecimal addMsrp = new BigDecimal("45000.00");
     private final String addDescription = "Fast and effecient, with lots of "
             + "style. This car can be of comfort while taking you places.";
     
@@ -95,8 +95,8 @@ public class CarDealershipVehicleDaoDBTest implements CarDealershipVehicleType {
     private final String interior2 = "Black";
     private final int mileage2 = 0;
     private final String vin2 = "RV2JOJPOFD23FLJ24";
-    private final BigDecimal salePrice2 = new BigDecimal("153200");
-    private final BigDecimal msrp2 = new BigDecimal("158000");
+    private final BigDecimal salePrice2 = new BigDecimal("153200.00");
+    private final BigDecimal msrp2 = new BigDecimal("158000.00");
     private final String description2 = "Robust and sturdy. Helps you make way "
             + "through the toughest paths. This truck is fast and comes with style.";
     
@@ -117,13 +117,13 @@ public class CarDealershipVehicleDaoDBTest implements CarDealershipVehicleType {
     
     @BeforeAll
     public void setUpClass() throws SQLException, IOException {
-        user = userDao.addUser(new User("John", "Doe", 
+        user = userDao.save(new User("John", "Doe", 
                 "john.doe@email.com", "abc123", ADMIN));
         
-        make = makeDao.addMake(
+        make = makeDao.save(
                 new Make("BMW", user, TODAY));
         
-        model = modelDao.addModel(
+        model = modelDao.save(
                 new Model("BMW X5", make, user,
                         TODAY));
         
@@ -147,9 +147,9 @@ public class CarDealershipVehicleDaoDBTest implements CarDealershipVehicleType {
         
         vehicleDao.uploadPictureById(vehicle2.getVehicleId(), picture2);
         
-        userDao.addUser(USER);
-        makeDao.addMake(MAKE);
-        modelDao.addModel(MODEL);
+        userDao.save(USER);
+        makeDao.save(MAKE);
+        modelDao.save(MODEL);
         
         query = new InventoryQuery("BMW", 
             NO_MIN_PRICE, "40000", "2015", 
@@ -163,20 +163,14 @@ public class CarDealershipVehicleDaoDBTest implements CarDealershipVehicleType {
         vehicleDao.deleteVehicleById(vehicle2.getVehicleId());
         vehicleDao.deleteVehicleById(vehicle3.getVehicleId());
         vehicleDao.deleteVehicleById(addVehicle.getVehicleId());
-        vehicleDao.resetPictureAutoIncrement(0);
-        vehicleDao.resetVehicleAutoIncrement(0);
-        
-        modelDao.deleteModelById(model.getModelId());
-        modelDao.deleteModelById(MODEL.getModelId());
-        modelDao.resetAutoIncrement(0);
-        
-        makeDao.deleteMakeById(make.getMakeId());
-        makeDao.deleteMakeById(MAKE.getMakeId());
-        makeDao.resetAutoIncrement(0);
-        
-        userDao.deleteUserById(user.getUserId());
-        userDao.deleteUserById(USER.getUserId());
-        userDao.resetAutoIncrement(0);
+//        
+//        modelDao.deleteById(model.getModelId());
+//        modelDao.deleteById(MODEL.getModelId());
+//        
+//        makeDao.deleteById(make.getMakeId());
+//        makeDao.deleteById(MAKE.getMakeId());
+//        userDao.deleteById(user.getUserId());
+//        userDao.deleteById(USER.getUserId());
     }
     
     @BeforeEach
@@ -349,8 +343,8 @@ public class CarDealershipVehicleDaoDBTest implements CarDealershipVehicleType {
         final String updateInterior = "Black";
         final int updateMileage = 510;
         final String updateVin = "2SDF902WFEON223NF";
-        final BigDecimal updateSalePrice = new BigDecimal("63000");
-        final BigDecimal updateMsrp = new BigDecimal("65000");
+        final BigDecimal updateSalePrice = new BigDecimal("63000.00");
+        final BigDecimal updateMsrp = new BigDecimal("65000.00");
         final String updateDescription = "This one is a beauty; "
                 + "from inside out, comfortable, efficient and practical.";
         

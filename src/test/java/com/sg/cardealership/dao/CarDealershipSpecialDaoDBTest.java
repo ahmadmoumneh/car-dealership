@@ -31,7 +31,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class CarDealershipSpecialDaoDBTest {
     
     @Autowired
-    private CarDealershipSpecialDao specialDao;
+    private SpecialRepository specialDao;
     
     private Special special;
     
@@ -46,13 +46,12 @@ public class CarDealershipSpecialDaoDBTest {
             FileNotFoundException, 
             SQLException {
         
-        special = specialDao.addSpecial(new Special(TITLE, DESCRIPTION));
+        special = specialDao.save(new Special(TITLE, DESCRIPTION));
     }
     
     @AfterAll
     public void tearDownClass() {
-        specialDao.deleteSpecialById(special.getSpecialId());
-        specialDao.resetAutoIncrement(0);
+        specialDao.deleteAll();
     }
     
     @BeforeEach
@@ -68,7 +67,7 @@ public class CarDealershipSpecialDaoDBTest {
      */
     @Test
     public void testGetAllSpecials() {
-        List<Special> specials = specialDao.getAllSpecials();
+        List<Special> specials = specialDao.findAll();
         
         assertFalse(specials.isEmpty());
     }
@@ -78,19 +77,17 @@ public class CarDealershipSpecialDaoDBTest {
      */
     @Test
     public void testAddSpecial() {
-        Special promo = specialDao.addSpecial(new Special(
+        Special promo = specialDao.save(new Special(
                  "35% OFF On Used SUVs", "Do you have a thing for "
                          + "SUVs? We have the best prices with the best "
                          + "discounts."));
         
-        Special querried = specialDao.getSpecialById(promo.getSpecialId());
+        Special querried = specialDao.findById(promo.getSpecialId()).get();
         
         assertNotNull(querried);
         assertEquals(promo, querried);
         
-        boolean deleteSuccess = specialDao.deleteSpecialById(promo.getSpecialId());
-        
-        assertTrue(deleteSuccess);
+        specialDao.deleteById(promo.getSpecialId());
     }
 
     /**
@@ -105,14 +102,13 @@ public class CarDealershipSpecialDaoDBTest {
             FileNotFoundException, 
             SQLException {
         
-        boolean deleteSuccess = specialDao.deleteSpecialById(
-                special.getSpecialId());
+        specialDao.deleteById(special.getSpecialId());
         
-        if (!deleteSuccess) {
-            fail("Nothing was deleted.");
-        }
+        Special deleted = specialDao.findById(special.getSpecialId()).orElse(null);
+        
+        assertNull(deleted);
             
-        specialDao.addSpecial(special);
+        specialDao.save(special);
     }
 
     /**

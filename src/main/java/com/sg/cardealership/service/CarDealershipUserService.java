@@ -17,11 +17,7 @@ public interface CarDealershipUserService {
     
     User addUser(User user) throws SQLException;
     
-    boolean editUser(User user) throws SQLException;
-    
-    boolean changePassword(User user);
+    User editUser(User user) throws SQLException;
     
     User login(String username, String password);
-    
-    void logout(int id);
 }

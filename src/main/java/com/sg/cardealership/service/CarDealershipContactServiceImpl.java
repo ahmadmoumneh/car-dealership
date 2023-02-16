@@ -4,7 +4,7 @@
  */
 package com.sg.cardealership.service;
 
-import com.sg.cardealership.dao.CarDealershipContactDao;
+import com.sg.cardealership.dao.ContactRepository;
 import com.sg.cardealership.dto.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ public class CarDealershipContactServiceImpl implements
         CarDealershipContactService {
     
     @Autowired
-    private CarDealershipContactDao contactDao;
+    private ContactRepository contactDao;
     
     @Override
     public Contact addContact(Contact contact) throws Exception  {
@@ -28,7 +28,7 @@ public class CarDealershipContactServiceImpl implements
         }
            
            
-        return contactDao.addContact(contact);
+        return contactDao.save(contact);
     }
     
     private Boolean inputIsValid(Contact contact){

@@ -79,9 +79,9 @@ public class Make {
         @Override
         public Make mapRow(ResultSet rs, int rowNum) throws SQLException {
             Make make = new Make();
-            make.setMakeId(rs.getInt("makeId"));
-            make.setMakeName(rs.getString("makeName"));
-            make.setMakeDate(rs.getDate("makeDate")
+            make.setMakeId(rs.getInt("make_id"));
+            make.setMakeName(rs.getString("make_name"));
+            make.setMakeDate(rs.getDate("make_date")
                     .toLocalDate());
             return make;
         }

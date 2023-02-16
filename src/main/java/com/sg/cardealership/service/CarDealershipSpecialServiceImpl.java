@@ -4,7 +4,7 @@
  */
 package com.sg.cardealership.service;
 
-import com.sg.cardealership.dao.CarDealershipSpecialDao;
+import com.sg.cardealership.dao.SpecialRepository;
 import com.sg.cardealership.dto.Special;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,22 +19,22 @@ public class CarDealershipSpecialServiceImpl implements
        CarDealershipSpecialService {
     
     @Autowired
-    private CarDealershipSpecialDao specialDao;
+    private SpecialRepository specialDao;
     
     
     @Override
     public List<Special> getAllSpecials() {
-        return specialDao.getAllSpecials();
+        return specialDao.findAll();
     }
 
     @Override
     public Special addSpecial(Special special) {
-        return specialDao.addSpecial(special);
+        return specialDao.save(special);
     }
 
     @Override
-    public boolean deleteSpecialById(int id) {
-        return specialDao.deleteSpecialById(id);
+    public void deleteSpecialById(int id) {
+        specialDao.deleteById(id);
     }
     
 }

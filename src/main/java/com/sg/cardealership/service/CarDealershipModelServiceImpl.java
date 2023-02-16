@@ -4,7 +4,7 @@
  */
 package com.sg.cardealership.service;
 
-import com.sg.cardealership.dao.CarDealershipModelDao;
+import com.sg.cardealership.dao.ModelRepository;
 import com.sg.cardealership.dto.Model;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class CarDealershipModelServiceImpl implements
       CarDealershipModelService {
     
     @Autowired
-    private ModelRepo modelRepo;
+    private ModelRepository modelRepo;
     
     @Override
     public Model addModel(Model model) throws IOException, FileNotFoundException, SQLException {
